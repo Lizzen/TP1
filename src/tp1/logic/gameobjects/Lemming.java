@@ -8,16 +8,27 @@ public class Lemming {
 	private Position pos;
 	private boolean estaVivo;
 	private int caida;
-	private Direction direccion;
+	private Direction direccion = Direction.RIGHT;
 	private Game game;
 	private WalkRole role = WalkRole.caminante;
+	private String SYMBOLDER = "B";
+	private String SYMBOLIZ = "ᗺ";
 	
 	public Lemming(Game game, int x, int y) {
+		this.pos = new Position();
 		this.pos.setRow(x);
 		this.pos.setCol(y);
 		this.game = game;
 	}
-
+	
+	public String toString() {
+		String Symbol;
+		
+		if(this.direccion == Direction.RIGHT) Symbol = SYMBOLDER;
+		else Symbol = SYMBOLIZ;
+		
+		return Symbol;
+	}
 
 	public boolean isEstaVivo() {
 		return estaVivo;
