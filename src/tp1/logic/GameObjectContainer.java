@@ -12,13 +12,16 @@ public class GameObjectContainer {
 	private  ArrayList<Lemming> lemmings;
 	private  ArrayList<Wall> walls;
 	
-	public GameObjectContainer() {
+	public GameObjectContainer(Game game) {
+		this.game = game;
 		this.lemmings = new ArrayList<Lemming>();
 		this.walls = new ArrayList<Wall>();
 	}
 	
 	public void update() {
-		
+		for (int i = 0; i < this.game.numLemmingsInBoard(); ++i) {
+			lemmings.get(i).update();
+		}
 	}
 	
     public void addLemming(Lemming lemming) {

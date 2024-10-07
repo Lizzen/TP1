@@ -48,7 +48,7 @@ public class Controller {
 				this.game.update();
 				break;
 			default:
-				System.out.print(Messages.UNKNOWN_COMMAND + "\n");
+				System.out.print(this.game.error());
 				break;
 			}
 			System.out.print("Command > ");
@@ -57,5 +57,4 @@ public class Controller {
 		}
 		view.showEndMessage();
 	}
-
 }

@@ -16,7 +16,7 @@ public class Game {
 
 	public Game(int nLevel) {
 		this.nLevel = nLevel;
-		this.gobc = new GameObjectContainer();
+		this.gobc = new GameObjectContainer(this);
 		initGame();
 	}
 	
@@ -32,7 +32,7 @@ public class Game {
 	}
 	
 	public void reset() {
-		this.gobc = new GameObjectContainer();
+		this.gobc = new GameObjectContainer(this);
 		initGame();
 		this.cycle = 0;
 	}
@@ -99,6 +99,10 @@ public class Game {
 
 	public String help() {
 		return Messages.HELP;
+	}
+	
+	public String error() {
+		return Messages.UNKNOWN_COMMAND + "\n";
 	}
 
 }

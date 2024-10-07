@@ -77,6 +77,7 @@ public class Lemming {
 	}
 	
 	public void update() {
-		//TODO fill your code
+		this.pos.setCol(this.pos.getCol() + 1);
+		
 	}
 }
