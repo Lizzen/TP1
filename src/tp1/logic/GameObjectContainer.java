@@ -16,6 +16,11 @@ public class GameObjectContainer {
 		this.lemmings = new ArrayList<Lemming>();
 		this.walls = new ArrayList<Wall>();
 	}
+	
+	public void update() {
+		
+	}
+	
     public void addLemming(Lemming lemming) {
     	this.lemmings.add(lemming);
     }

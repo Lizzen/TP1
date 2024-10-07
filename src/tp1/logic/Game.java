@@ -1,13 +1,14 @@
 package tp1.logic;
 
 import tp1.logic.gameobjects.Lemming;
+import tp1.view.Messages;
 import tp1.logic.gameobjects.Wall;
 
 public class Game {
 
 	public static final int DIM_X = 10;
 	public static final int DIM_Y = 10;
-	private GameObjectContainer gob;
+	private GameObjectContainer gobc;
 	private int nLevel = 1;
 	private int cycle = 0;
 	private Lemming lemming;
@@ -15,14 +16,19 @@ public class Game {
 
 	public Game(int nLevel) {
 		this.nLevel = nLevel;
-		this.gob = new GameObjectContainer();
+		this.gobc = new GameObjectContainer();
 		initGame();
 	}
 	
 	public void initGame() {
-		this.lemming = new Lemming(this, 2, 4); this.gob.addLemming(this.lemming);
-		this.lemming = new Lemming(this, 8, 9); this.gob.addLemming(this.lemming);
-		this.wall = new Wall(this, 3, 4); this.gob.addWall(this.wall);
+		this.lemming = new Lemming(this, 2, 4); this.gobc.addLemming(this.lemming);
+		this.lemming = new Lemming(this, 8, 9); this.gobc.addLemming(this.lemming);
+		this.wall = new Wall(this, 3, 4); this.gobc.addWall(this.wall);
+	}
+	
+	public void update() {
+		cycle++;
+		this.gobc.update();
 	}
 
 	public int getCycle() {
@@ -56,19 +62,20 @@ public class Game {
 	}
 	
 	// Muestra el tablero
+	/*Preguntar si hace falta hacerlo con la clase Message*/
 	public String positionToString(int col, int row) {		
 		String ret = ""; 	
-		for (int i = 0; i < this.gob.getLemmings(); ++i) {
-			Position pos = this.gob.getLemming(i).getPos();
+		for (int i = 0; i < this.gobc.getLemmings(); ++i) {
+			Position pos = this.gobc.getLemming(i).getPos();
 			if (col == pos.getCol() && row == pos.getRow()) {
-				ret = this.gob.getLemming(i).toString();
+				ret = this.gobc.getLemming(i).toString();
 			}
 		}
 		
-		for (int i = 0; i < this.gob.getWalls(); ++i) {
-			Position pos = this.gob.getWall(i).getPos();
+		for (int i = 0; i < this.gobc.getWalls(); ++i) {
+			Position pos = this.gobc.getWall(i).getPos();
 			if (col == pos.getCol() && row == pos.getRow()) {
-				ret = this.gob.getWall(i).toString();
+				ret = this.gobc.getWall(i).toString();
 			}
 		}
 		return ret;

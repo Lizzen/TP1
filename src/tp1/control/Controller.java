@@ -24,7 +24,11 @@ public class Controller {
 	public void run() {
 		view.showWelcome();
 		//TODO fill your code: The main loop that displays the game, asks the user for input, and executes the action.
-		view.showGame();
+		
+		while (!(this.game.playerWins() || this.game.playerLooses())) {
+			view.showGame();
+			this.game.update();
+		}
 		view.showEndMessage();
 	}
 
