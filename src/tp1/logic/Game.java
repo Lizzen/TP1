@@ -27,8 +27,14 @@ public class Game {
 	}
 	
 	public void update() {
-		cycle++;
+		this.cycle++;
 		this.gobc.update();
+	}
+	
+	public void reset() {
+		this.gobc = new GameObjectContainer();
+		initGame();
+		this.cycle = 0;
 	}
 
 	public int getCycle() {
@@ -37,17 +43,17 @@ public class Game {
 
 	public int numLemmingsInBoard() {
 		int ret = 0;
-		/*for (int i = 0; i < gob.getLemmings().length;  ++i) {
-			if (gob.getLemming(i).isEstaVivo()) {
+		for (int i = 0; i < gobc.getLemmings();  ++i) {
+			if (gobc.getLemming(i).isEstaVivo()) {
 				ret++;
 			}
-		}*/
+		}
 		return ret;
 	}
 
 	public int numLemmingsDead() {
 		int ret = 0;
-			//ret = gob.getLemmings().length - numLemmingsInBoard(); 
+			ret = gobc.getLemmings() - numLemmingsInBoard(); 
 		return ret;
 	}
 
@@ -92,8 +98,7 @@ public class Game {
 	}
 
 	public String help() {
-		// TODO Auto-generated method stub
-		return null;
+		return Messages.HELP;
 	}
 
 }

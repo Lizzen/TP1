@@ -19,6 +19,7 @@ public class Lemming {
 		this.pos.setRow(x);
 		this.pos.setCol(y);
 		this.game = game;
+		this.estaVivo = true;
 	}
 	
 	public String toString() {
