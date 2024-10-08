@@ -6,7 +6,6 @@ import tp1.logic.Position;
 public class Wall {
 
 	private Position pos;
-	private String SYMBOL = "▓";
 	private Game game;
 	
 	public Wall(Game game, int row, int col) {
@@ -16,15 +15,14 @@ public class Wall {
 		this.game = game;
 	}
 	
-	public String toString() {
-		return SYMBOL;
-	}
-	
 	public Position getPos() {
 		return this.pos;
 	}
 	public void setPos(Position pos) {
 		this.pos = pos;
 	}
-
+	
+	public boolean isInPosition(int x, int y) {
+		return this.pos.getRow() == x && this.pos.getCol() == y;
+	}
 }

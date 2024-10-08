@@ -21,9 +21,25 @@ public class Game {
 	}
 	
 	public void initGame() {
-		this.lemming = new Lemming(this, 2, 4); this.gobc.addLemming(this.lemming);
-		this.lemming = new Lemming(this, 8, 9); this.gobc.addLemming(this.lemming);
-		this.wall = new Wall(this, 3, 4); this.gobc.addWall(this.wall);
+		this.lemming = new Lemming(this, 3, 2); this.gobc.addLemming(this.lemming);
+		this.lemming = new Lemming(this, 8, 0); this.gobc.addLemming(this.lemming);
+		this.lemming = new Lemming(this, 0, 9); this.gobc.addLemming(this.lemming);
+
+		for(int i = 2; i < 6; i++) {
+			this.wall = new Wall(this, 4, i); this.gobc.addWall(this.wall);
+		}
+		int j = 0;
+		for(int i = 8; i < 11; i++) {
+			this.wall = new Wall(this, 1, i); this.gobc.addWall(this.wall);
+			this.wall = new Wall(this, 9, i); this.gobc.addWall(this.wall);
+			this.wall = new Wall(this, 9, j); this.gobc.addWall(this.wall);
+			++j;
+		}
+		for(int i = 4; i < 8; i++) {
+			this.wall = new Wall(this, 6, i); this.gobc.addWall(this.wall);
+		}
+		this.wall = new Wall(this, 5, 7); this.gobc.addWall(this.wall);
+		this.wall = new Wall(this, 8, 8); this.gobc.addWall(this.wall);
 	}
 	
 	public void update() {
@@ -43,8 +59,8 @@ public class Game {
 
 	public int numLemmingsInBoard() {
 		int ret = 0;
-		for (int i = 0; i < gobc.getLemmings();  ++i) {
-			if (gobc.getLemming(i).isEstaVivo()) {
+		for (int i = 0; i < this.gobc.getLemmings();  ++i) {
+			if (this.gobc.getLemming(i).isEstaVivo()) {
 				ret++;
 			}
 		}
@@ -53,7 +69,7 @@ public class Game {
 
 	public int numLemmingsDead() {
 		int ret = 0;
-			ret = gobc.getLemmings() - numLemmingsInBoard(); 
+			ret = this.gobc.getLemmings() - numLemmingsInBoard(); 
 		return ret;
 	}
 
@@ -70,21 +86,7 @@ public class Game {
 	// Muestra el tablero
 	/*Preguntar si hace falta hacerlo con la clase Message*/
 	public String positionToString(int col, int row) {		
-		String ret = ""; 	
-		for (int i = 0; i < this.gobc.getLemmings(); ++i) {
-			Position pos = this.gobc.getLemming(i).getPos();
-			if (col == pos.getCol() && row == pos.getRow()) {
-				ret = this.gobc.getLemming(i).toString();
-			}
-		}
-		
-		for (int i = 0; i < this.gobc.getWalls(); ++i) {
-			Position pos = this.gobc.getWall(i).getPos();
-			if (col == pos.getCol() && row == pos.getRow()) {
-				ret = this.gobc.getWall(i).toString();
-			}
-		}
-		return ret;
+		return this.gobc.ObjectsInPosition(row, col);
 	}
 	
 	public boolean playerWins() {
@@ -93,8 +95,11 @@ public class Game {
 	}
 
 	public boolean playerLooses() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.gobc.getLemmings() == numLemmingsDead();
+	}
+	
+	public boolean collision(int x, int y) {
+		return this.gobc.getCollision(x, y);
 	}
 
 	public String help() {

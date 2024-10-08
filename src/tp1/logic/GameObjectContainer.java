@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import tp1.logic.gameobjects.Lemming;
 import tp1.logic.gameobjects.Wall;
+import tp1.view.Messages;
 
 
 public class GameObjectContainer {
@@ -11,6 +12,7 @@ public class GameObjectContainer {
 	protected int x, y;
 	private  ArrayList<Lemming> lemmings;
 	private  ArrayList<Wall> walls;
+	private int numLemmingsDead = 0;
 	
 	public GameObjectContainer(Game game) {
 		this.game = game;
@@ -20,8 +22,30 @@ public class GameObjectContainer {
 	
 	public void update() {
 		for (int i = 0; i < this.game.numLemmingsInBoard(); ++i) {
+			while (!lemmings.get(i).isEstaVivo()) {
+				++i;
+			}
 			lemmings.get(i).update();
 		}
+	}
+	
+	public String ObjectsInPosition(int x, int y) {
+		String ret = ""; 
+		boolean esLemming = false;
+		for(Lemming GO: this.lemmings) {
+			if(GO.isEstaVivo() && GO.isInPosition(x, y)) {
+				ret = GO.toString();
+				esLemming = true;
+			}
+		}
+		
+		if (!esLemming) {
+			for(Wall GO: this.walls) {
+				if(GO.isInPosition(x, y)) ret = Messages.WALL;			
+			}
+		}
+
+		return ret;
 	}
 	
     public void addLemming(Lemming lemming) {
@@ -32,7 +56,16 @@ public class GameObjectContainer {
     	this.walls.add(wall);
     }
     
-    public int getWalls() {
+    public boolean getCollision(int x, int y) {
+    	boolean ret = false;
+		for(Wall GO: this.walls) {
+			if(GO.isInPosition(x, y)) ret = true;			
+		}
+		
+		return ret;
+    }
+
+	public int getWalls() {
     	return this.walls.size();
     }
     
