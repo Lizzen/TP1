@@ -1,5 +1,6 @@
 package tp1.logic;
 
+import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.Lemming;
 import tp1.view.Messages;
 import tp1.logic.gameobjects.Wall;
@@ -13,19 +14,20 @@ public class Game {
 	private int cycle = 0;
 	private Lemming lemming;
 	private Wall wall;
+	private ExitDoor exitDoor;
 
 	public Game(int nLevel) {
 		this.nLevel = nLevel;
 		this.gobc = new GameObjectContainer(this);
-		initGame();
+		initGame(this.nLevel);
 	}
 	
-	public void initGame() {
+	public void initGame(int nLevel){
 		this.lemming = new Lemming(this, 3, 2); this.gobc.addLemming(this.lemming);
 		this.lemming = new Lemming(this, 8, 0); this.gobc.addLemming(this.lemming);
 		this.lemming = new Lemming(this, 0, 9); this.gobc.addLemming(this.lemming);
 
-		for(int i = 2; i < 6; i++) {
+		for(int i = 2; i < 5; i++) {
 			this.wall = new Wall(this, 4, i); this.gobc.addWall(this.wall);
 		}
 		int j = 0;
@@ -40,6 +42,11 @@ public class Game {
 		}
 		this.wall = new Wall(this, 5, 7); this.gobc.addWall(this.wall);
 		this.wall = new Wall(this, 8, 8); this.gobc.addWall(this.wall);
+		this.exitDoor = new ExitDoor(this, 5, 4); this.gobc.addExitDoor(this.exitDoor);
+		
+		if (nLevel == 1) {
+			this.lemming = new Lemming(this, 3, 3); this.gobc.addLemming(this.lemming);
+		}
 	}
 	
 	public void update() {
@@ -49,7 +56,7 @@ public class Game {
 	
 	public void reset() {
 		this.gobc = new GameObjectContainer(this);
-		initGame();
+		initGame(this.nLevel);
 		this.cycle = 0;
 	}
 
@@ -59,8 +66,8 @@ public class Game {
 
 	public int numLemmingsInBoard() {
 		int ret = 0;
-		for (int i = 0; i < this.gobc.getLemmings();  ++i) {
-			if (this.gobc.getLemming(i).isEstaVivo()) {
+		for (int i = 0; i < this.gobc.getLemmings(); i++) {
+			if (this.gobc.getLemming(i).isEstaVivo() && !this.gobc.getLemming(i).isWin()) {
 				ret++;
 			}
 		}
@@ -74,13 +81,17 @@ public class Game {
 	}
 
 	public int numLemmingsExit() {
-		// TODO Auto-generated method stub
-		return 0;
+		int ret = 0;
+		for (int i = 0; i < this.gobc.getLemmings(); i++) {
+			if (this.gobc.getLemming(i).isWin()) {
+				ret++;
+			}
+		}
+		return ret;
 	}
 
 	public int numLemmingsToWin() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 2;
 	}
 	
 	// Muestra el tablero
@@ -90,18 +101,21 @@ public class Game {
 	}
 	
 	public boolean playerWins() {
-		
-		return false;
+		return numLemmingsExit() >= numLemmingsToWin();
 	}
 
 	public boolean playerLooses() {
-		return this.gobc.getLemmings() == numLemmingsDead();
+		return numLemmingsInBoard() == 0 && !playerWins();
 	}
 	
 	public boolean collision(int x, int y) {
 		return this.gobc.getCollision(x, y);
 	}
 
+	public boolean doorCollision(int x, int y) {
+		return this.gobc.doorCollision(x, y);
+	}
+	
 	public String help() {
 		return Messages.HELP;
 	}

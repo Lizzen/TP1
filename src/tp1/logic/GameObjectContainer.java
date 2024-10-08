@@ -2,6 +2,7 @@ package tp1.logic;
 
 import java.util.ArrayList;
 
+import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.Lemming;
 import tp1.logic.gameobjects.Wall;
 import tp1.view.Messages;
@@ -12,20 +13,23 @@ public class GameObjectContainer {
 	protected int x, y;
 	private  ArrayList<Lemming> lemmings;
 	private  ArrayList<Wall> walls;
-	private int numLemmingsDead = 0;
+	private  ExitDoor exitDoor;
 	
 	public GameObjectContainer(Game game) {
 		this.game = game;
 		this.lemmings = new ArrayList<Lemming>();
 		this.walls = new ArrayList<Wall>();
+		this.exitDoor = null;
 	}
 	
 	public void update() {
-		for (int i = 0; i < this.game.numLemmingsInBoard(); ++i) {
-			while (!lemmings.get(i).isEstaVivo()) {
-				++i;
+		int i = 0;
+		while (i <  this.lemmings.size()) {
+			if (lemmings.get(i).isEstaVivo() || !lemmings.get(i).isWin()) {
+				lemmings.get(i).update();
 			}
-			lemmings.get(i).update();
+
+			++i;
 		}
 	}
 	
@@ -33,8 +37,8 @@ public class GameObjectContainer {
 		String ret = ""; 
 		boolean esLemming = false;
 		for(Lemming GO: this.lemmings) {
-			if(GO.isEstaVivo() && GO.isInPosition(x, y)) {
-				ret = GO.toString();
+			if(!GO.isWin() && GO.isEstaVivo() && GO.isInPosition(x, y)) {
+				ret += GO.toString();
 				esLemming = true;
 			}
 		}
@@ -44,6 +48,8 @@ public class GameObjectContainer {
 				if(GO.isInPosition(x, y)) ret = Messages.WALL;			
 			}
 		}
+		
+		if (exitDoor.isInPosition(x, y)) ret += Messages.EXIT_DOOR;
 
 		return ret;
 	}
@@ -64,6 +70,11 @@ public class GameObjectContainer {
 		
 		return ret;
     }
+    
+    public boolean doorCollision(int x, int y) {
+		
+		return this.exitDoor.isInPosition(x, y);
+    }
 
 	public int getWalls() {
     	return this.walls.size();
@@ -80,4 +91,9 @@ public class GameObjectContainer {
     public Lemming getLemming(int i) {
     	return this.lemmings.get(i);
     }
+
+	public void addExitDoor(ExitDoor exitDoor) {
+		this.exitDoor = exitDoor;
+		
+	}
 }

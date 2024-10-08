@@ -8,6 +8,7 @@ public class Lemming {
 	public enum WalkRole {caminante};
 	private Position pos;
 	private boolean estaVivo;
+	private boolean isWin;
 	private int caida;
 	private Direction direccion = Direction.RIGHT;
 	private Game game;
@@ -20,6 +21,7 @@ public class Lemming {
 		this.pos.setCol(y);
 		this.game = game;
 		this.estaVivo = true;
+		this.isWin = false;
 	}
 	
 	public String toString() {
@@ -80,7 +82,20 @@ public class Lemming {
 	}
 	
 	public void update() {
-		if ((this.pos.getCol() + 1 == 10 || this.game.collision(this.pos.getRow(), this.pos.getCol() + 1)) && this.direccion == Direction.RIGHT) {
+		if (this.game.doorCollision(this.pos.getRow(), this.pos.getCol()) && caida < 4) {
+			this.isWin =  true;
+		}
+		else if(this.estaVivo == true && !this.game.collision(this.pos.getRow() +1, this.pos.getCol())) {
+			this.pos.setRow(this.pos.getRow() + 1);
+			if (this.pos.getRow() == 10) {
+				this.estaVivo = false;
+			}
+			this.caida++;
+		}
+		else if (this.caida > 3) {
+			this.estaVivo = false;
+		}
+		else if ((this.pos.getCol() + 1 == 10 || this.game.collision(this.pos.getRow(), this.pos.getCol() + 1)) && this.direccion == Direction.RIGHT) {
 			this.direccion = Direction.LEFT;
 		}
 		else if ((this.pos.getCol() - 1 == -1 || this.game.collision(this.pos.getRow(), this.pos.getCol() - 1)) && this.direccion == Direction.LEFT) {
@@ -88,18 +103,17 @@ public class Lemming {
 		}
 		else if (this.direccion.equals(Direction.LEFT)) {
 			this.pos.setCol(this.pos.getCol() - 1);
+			this.caida = 0;
 		}
 		else {
 			this.pos.setCol(this.pos.getCol() + 1);
+			this.caida = 0;
 		}
 		
-		int posAux = this.pos.getRow();
-		while(this.estaVivo == true && !this.game.collision(this.pos.getRow() +1, this.pos.getCol())) {
-			this.pos.setRow(this.pos.getRow() + 1);
-			if (this.pos.getRow() == 11 || this.pos.getRow() == posAux + 3) {
-				this.estaVivo = false;
-			}
-		}
 		
+	}
+
+	public boolean isWin() {
+		return isWin;
 	}
 }

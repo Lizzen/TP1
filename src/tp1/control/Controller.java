@@ -25,6 +25,7 @@ public class Controller {
 	 */
 	public void run() {
 		view.showWelcome();
+		view.showGame();
 		//TODO fill your code: The main loop that displays the game, asks the user for input, and executes the action.
 		String texto = comando();
 		while (!texto.equalsIgnoreCase("e") && !(this.game.playerWins() || this.game.playerLooses())) {
@@ -33,7 +34,6 @@ public class Controller {
 			case("reset"):
 				this.game.reset();
 				view.showGame();
-				this.game.update();
 				break;
 			case("h"):
 			case("help"):
@@ -42,17 +42,14 @@ public class Controller {
 			case("n"):
 			case(""):
 			case("none"):
-				view.showGame();
 				this.game.update();
+				view.showGame();
 				break;
 			default:
 				System.out.print(this.game.error());
 				break;
 			}
 			texto = comando();
-		}
-		if (!texto.equalsIgnoreCase("e") && !texto.equalsIgnoreCase("exit")) {
-			view.showGame();
 		}
 		
 		view.showEndMessage();
