@@ -23,14 +23,18 @@ public class GameObjectContainer {
 	}
 	
 	public void update() {
-		int i = 0;
-		while (i <  this.lemmings.size()) {
-			if (lemmings.get(i).isEstaVivo() || !lemmings.get(i).isWin()) {
-				lemmings.get(i).update();
+		for(Lemming GO: this.lemmings) {
+			if (GO.isEstaVivo() || !GO.isWin()) {
+				GO.update();
 			}
-
-			++i;
+			else if (!GO.isEstaVivo()) {
+				removeDead(GO);
+			}
 		}
+	}
+	
+	public void removeDead(Lemming lemming) {
+		lemmings.remove(lemming);
 	}
 	
 	public String ObjectsInPosition(int x, int y) {

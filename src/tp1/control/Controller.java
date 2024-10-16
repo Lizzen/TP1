@@ -27,9 +27,11 @@ public class Controller {
 		view.showWelcome();
 		view.showGame();
 		//TODO fill your code: The main loop that displays the game, asks the user for input, and executes the action.
-		String texto = comando();
-		while (!texto.equalsIgnoreCase("e") && !(this.game.playerWins() || this.game.playerLooses())) {
-			switch(texto) {
+		String[] texto = new String[1];
+		texto[0] = "";
+		while (!texto[0].equalsIgnoreCase("e") && !(this.game.playerWins() || this.game.playerLooses())) {
+			texto = view.getPrompt();
+			switch(texto[0]) {
 			case("r"):
 			case("reset"):
 				this.game.reset();
@@ -37,7 +39,7 @@ public class Controller {
 				break;
 			case("h"):
 			case("help"):
-				System.out.print(this.game.help());
+				view.showMessage(this.game.help());
 				break;
 			case("n"):
 			case(""):
@@ -46,19 +48,12 @@ public class Controller {
 				view.showGame();
 				break;
 			default:
-				System.out.print(this.game.error());
+				view.showError(this.game.error());
 				break;
 			}
-			texto = comando();
+			
 		}
 		
 		view.showEndMessage();
-	}
-	
-	public String comando() {
-		System.out.print("Command > ");
-		@SuppressWarnings("resource")
-		Scanner input = new Scanner(System.in);
-		return input.nextLine();
 	}
 }

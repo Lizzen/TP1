@@ -1,18 +1,19 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.*;
+import tp1.logic.lemmingRoles.WalkerRole;
 import tp1.view.Messages;
 
 public class Lemming {
 
-	public enum WalkRole {caminante};
 	private Position pos;
 	private boolean estaVivo;
 	private boolean isWin;
 	private int caida;
-	private Direction direccion = Direction.RIGHT;
+	private boolean enAire;
+	private Direction direccion;
 	private Game game;
-	private WalkRole role = WalkRole.caminante;
+	private WalkerRole role;
 	
 	public Lemming(Game game, int x, int y) {
 		this.game = game;
@@ -21,18 +22,21 @@ public class Lemming {
 		this.pos.setCol(y);
 		this.game = game;
 		this.estaVivo = true;
+		this.enAire = false;
 		this.isWin = false;
+		this.direccion = Direction.RIGHT;
+		this.role = new WalkerRole(game);
+	}
+	
+	
+	public void update() {
+		this.role.play(this);
 	}
 	
 	public String toString() {
-		String Symbol;
-		
-		if(this.direccion == Direction.RIGHT) Symbol = Messages.LEMMING_RIGHT;
-		else Symbol = Messages.LEMMING_LEFT;
-		
-		return Symbol;
+		return this.role.getIcon(this);
 	}
-
+	
 	public boolean isEstaVivo() {
 		return estaVivo;
 	}
@@ -40,6 +44,18 @@ public class Lemming {
 
 	public void setEstaVivo(boolean estaVivo) {
 		this.estaVivo = estaVivo;
+	}
+	
+	public boolean isEnAire() {
+		return enAire;
+	}
+
+	public void setEnAire(boolean enAire) {
+		this.enAire = enAire;
+	}
+
+	public boolean getEstaVivo() {
+		return this.estaVivo;
 	}
 
 
@@ -57,7 +73,7 @@ public class Lemming {
 	}
 
 	public Position getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	public void setPos(Position pos) {
@@ -72,48 +88,20 @@ public class Lemming {
 		this.direccion = direccion;
 	}
 
-	public WalkRole getRole() {
-		return role;
+	public WalkerRole getRole() {
+		return this.role;
 	}
 
 
-	public void setRole(WalkRole role) {
+	public void setRole(WalkerRole role) {
 		this.role = role;
-	}
-	
-	public void update() {
-		if (this.game.doorCollision(this.pos.getRow(), this.pos.getCol()) && caida < 4) {
-			this.isWin =  true;
-		}
-		else if(this.estaVivo == true && !this.game.collision(this.pos.getRow() +1, this.pos.getCol())) {
-			this.pos.setRow(this.pos.getRow() + 1);
-			if (this.pos.getRow() == 10) {
-				this.estaVivo = false;
-			}
-			this.caida++;
-		}
-		else if (this.caida > 3) {
-			this.estaVivo = false;
-		}
-		else if ((this.pos.getCol() + 1 == 10 || this.game.collision(this.pos.getRow(), this.pos.getCol() + 1)) && this.direccion == Direction.RIGHT) {
-			this.direccion = Direction.LEFT;
-		}
-		else if ((this.pos.getCol() - 1 == -1 || this.game.collision(this.pos.getRow(), this.pos.getCol() - 1)) && this.direccion == Direction.LEFT) {
-			this.direccion = Direction.RIGHT;
-		}
-		else if (this.direccion.equals(Direction.LEFT)) {
-			this.pos.setCol(this.pos.getCol() - 1);
-			this.caida = 0;
-		}
-		else {
-			this.pos.setCol(this.pos.getCol() + 1);
-			this.caida = 0;
-		}
-		
-		
 	}
 
 	public boolean isWin() {
-		return isWin;
+		return this.isWin;
+	}
+
+	public void setWin(boolean win) {
+		this.isWin =  win;
 	}
 }
