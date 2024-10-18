@@ -12,7 +12,7 @@ public class Game {
 	private GameObjectContainer gobc;
 	private int nLevel = 0;
 	private int cycle = 0;
-	private int deads = 0;
+	private int lemmingsToWin;
 	private Lemming lemming;
 	private Wall wall;
 	private ExitDoor exitDoor;
@@ -24,6 +24,7 @@ public class Game {
 	}
 	
 	public void initGame(int nLevel){
+		this.lemmingsToWin = 2;
 		this.lemming = new Lemming(this, 3, 2); this.gobc.addLemming(this.lemming);
 		this.lemming = new Lemming(this, 8, 0); this.gobc.addLemming(this.lemming);
 		this.lemming = new Lemming(this, 0, 9); this.gobc.addLemming(this.lemming);
@@ -64,13 +65,7 @@ public class Game {
 	}
 
 	public int numLemmingsInBoard() {
-		int ret = 0;
-		for (int i = 0; i < this.gobc.getLemmings(); i++) {
-			if (this.gobc.getLemming(i).isEstaVivo() && !this.gobc.getLemming(i).isWin()) {
-				ret++;
-			}
-		}
-		return ret;
+		return this.gobc.numLemmingsInBoard();
 	}
 
 	public int numLemmingsDead() {
@@ -80,17 +75,11 @@ public class Game {
 	}
 
 	public int numLemmingsExit() {
-		int ret = 0;
-		for (int i = 0; i < this.gobc.getLemmings(); i++) {
-			if (this.gobc.getLemming(i).isWin()) {
-				ret++;
-			}
-		}
-		return ret;
+		return this.gobc.numLemmingsExit();
 	}
 
 	public int numLemmingsToWin() {
-		return 2;
+		return lemmingsToWin;
 	}
 	
 	// Muestra el tablero
@@ -113,13 +102,4 @@ public class Game {
 	public boolean doorCollision(int x, int y) {
 		return this.gobc.doorCollision(x, y);
 	}
-	
-	public String help() {
-		return Messages.HELP;
-	}
-	
-	public String error() {
-		return Messages.UNKNOWN_COMMAND + "\n";
-	}
-
 }

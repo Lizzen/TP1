@@ -31,29 +31,36 @@ public class Controller {
 		texto[0] = "";
 		while (!texto[0].equalsIgnoreCase("e") && !(this.game.playerWins() || this.game.playerLooses())) {
 			texto = view.getPrompt();
-			switch(texto[0]) {
-			case("r"):
-			case("reset"):
-				this.game.reset();
-				view.showGame();
-				break;
-			case("h"):
-			case("help"):
-				view.showMessage(this.game.help());
-				break;
-			case("n"):
-			case(""):
-			case("none"):
-				this.game.update();
-				view.showGame();
-				break;
-			default:
-				view.showError(this.game.error());
-				break;
+			if (texto.length > 1) {
+				view.showError(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER);
+			}
+			else {
+				switch(texto[0]) {
+				case("r"):
+				case("reset"):
+					this.game.reset();
+					view.showGame();
+					break;
+				case("h"):
+				case("help"):
+					view.showMessage(Messages.HELP);
+					break;
+				case("n"):
+				case(""):
+				case("none"):
+					this.game.update();
+					view.showGame();
+					break;
+				case("e"):
+				case("exit"):
+					break;
+				default:
+					view.showError(Messages.UNKNOWN_COMMAND);
+					break;
+				}
 			}
 			
 		}
-		
 		view.showEndMessage();
 	}
 }

@@ -58,6 +58,27 @@ public class GameObjectContainer {
 		return ret;
 	}
 	
+	public int numLemmingsInBoard() {
+		int ret = 0;
+		
+		for(Lemming GO: this.lemmings) {
+			if(GO.isEstaVivo() && !GO.isWin()) {
+				ret++;
+			}
+		}
+		return ret;
+	}
+	
+	public int numLemmingsExit() {
+		int ret = 0;
+		for(Lemming GO: this.lemmings) {
+			if(GO.isWin()) {
+				ret++;
+			}
+		}
+		return ret;
+	}
+	
     public void addLemming(Lemming lemming) {
     	this.lemmings.add(lemming);
     }

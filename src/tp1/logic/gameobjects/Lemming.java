@@ -33,6 +33,48 @@ public class Lemming {
 		this.role.play(this);
 	}
 	
+	public void walkOrFall() {
+		// Si entra a la puerta
+		if (this.game.doorCollision(getPos().getRow(), getPos().getCol()) && getCaida() < 4) {
+			setWin(true);
+		}
+		// Si está en el aire
+		else if(getEstaVivo() == true && !this.game.collision(getPos().getRow() +1, getPos().getCol())) {
+			getPos().setRow(getPos().getRow() + 1);
+			if (getPos().getRow() == 10) {
+				setEstaVivo(false);
+			}
+			if (isEnAire()) {
+				setCaida(getCaida() + 1);
+			}
+			else {
+				setEnAire(true);
+			}
+		}
+		// Si muere por caida
+		else if (getCaida() > 2) {
+			setEstaVivo(false);
+		}
+		// Cambio de direccion a izquierda
+		else if ((getPos().getCol() + 1 == 10 || this.game.collision(getPos().getRow(), getPos().getCol() + 1)) && getDireccion() == Direction.RIGHT) {
+			setDireccion(Direction.LEFT);
+		}
+		// Cambio de direccion a derecha
+		else if ((getPos().getCol() - 1 == -1 || this.game.collision(getPos().getRow(), getPos().getCol() - 1)) && getDireccion() == Direction.LEFT) {
+			setDireccion(Direction.RIGHT);
+		}
+		// Caminar hacia la izquierda
+		else if (getDireccion().equals(Direction.LEFT)) {
+			getPos().setCol(getPos().getCol() - 1);
+			setCaida(0);
+		}
+		// Caminar hacia la derecha
+		else {
+			getPos().setCol(getPos().getCol() + 1);
+			setCaida(0);
+		}
+	}
+	
 	public String toString() {
 		return this.role.getIcon(this);
 	}
