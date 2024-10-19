@@ -105,16 +105,8 @@ public class GameObjectContainer {
     	return this.walls.size();
     }
     
-    public Wall getWall(int i) {
-    	return this.walls.get(i);
-    }
-    
     public int getLemmings() {
     	return this.lemmings.size();
-    }
-    
-    public Lemming getLemming(int i) {
-    	return this.lemmings.get(i);
     }
 
 	public void addExitDoor(ExitDoor exitDoor) {

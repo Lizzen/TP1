@@ -100,7 +100,6 @@ public class Lemming {
 		return this.estaVivo;
 	}
 
-
 	public int getCaida() {
 		return caida;
 	}
@@ -133,7 +132,6 @@ public class Lemming {
 	public WalkerRole getRole() {
 		return this.role;
 	}
-
 
 	public void setRole(WalkerRole role) {
 		this.role = role;
