@@ -3,7 +3,7 @@ package tp1.logic.gameobjects;
 import tp1.logic.Game;
 import tp1.logic.Position;
 
-public class ExitDoor {
+public class ExitDoor extends GameObject {
 	private Position pos;
 	private Game game;
 	

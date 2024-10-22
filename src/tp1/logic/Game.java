@@ -27,27 +27,27 @@ public class Game {
 	}
 	public void initGame(int nLevel){
 		this.lemmingsToWin = 2;
-		this.lemming = new Lemming(this, 3, 2); this.gobc.addLemming(this.lemming);
-		this.lemming = new Lemming(this, 8, 0); this.gobc.addLemming(this.lemming);
-		this.lemming = new Lemming(this, 0, 9); this.gobc.addLemming(this.lemming);
+		this.lemming = new Lemming(this, 3, 2); this.gobc.add(this.lemming);
+		this.lemming = new Lemming(this, 8, 0); this.gobc.add(this.lemming);
+		this.lemming = new Lemming(this, 0, 9); this.gobc.add(this.lemming);
 		for(int i = 2; i < 5; i++) {
-			this.wall = new Wall(this, 4, i); this.gobc.addWall(this.wall);
+			this.wall = new Wall(this, 4, i); this.gobc.add(this.wall);
 		}
 		for(int i = 8; i < 11; i++) {
-			this.wall = new Wall(this, 1, i); this.gobc.addWall(this.wall);
-			this.wall = new Wall(this, 9, i); this.gobc.addWall(this.wall);
+			this.wall = new Wall(this, 1, i); this.gobc.add(this.wall);
+			this.wall = new Wall(this, 9, i); this.gobc.add(this.wall);
 		}
 		for(int i = 4; i < 8; i++) {
-			this.wall = new Wall(this, 6, i); this.gobc.addWall(this.wall);
+			this.wall = new Wall(this, 6, i); this.gobc.add(this.wall);
 		}
-		this.wall = new Wall(this, 5, 7); this.gobc.addWall(this.wall);
-		this.wall = new Wall(this, 8, 8); this.gobc.addWall(this.wall);
-		this.wall = new Wall(this, 9, 0); this.gobc.addWall(this.wall);
-		this.wall = new Wall(this, 9, 1); this.gobc.addWall(this.wall);
-		this.exitDoor = new ExitDoor(this, 5, 4); this.gobc.addExitDoor(this.exitDoor);
+		this.wall = new Wall(this, 5, 7); this.gobc.add(this.wall);
+		this.wall = new Wall(this, 8, 8); this.gobc.add(this.wall);
+		this.wall = new Wall(this, 9, 0); this.gobc.add(this.wall);
+		this.wall = new Wall(this, 9, 1); this.gobc.add(this.wall);
+		this.exitDoor = new ExitDoor(this, 5, 4); this.gobc.add(this.exitDoor);
 		
 		if (nLevel == 1) {
-			this.lemming = new Lemming(this, 3, 3); this.gobc.addLemming(this.lemming);
+			this.lemming = new Lemming(this, 3, 3); this.gobc.add(this.lemming);
 		}
 	}
 	
@@ -83,8 +83,11 @@ public class Game {
 	}
 	
 	// Muestra el tablero
-	public String positionToString(int col, int row) {		
-		return this.gobc.ObjectsInPosition(row, col);
+	public String positionToString(int col, int row) {
+		Position p = new Position();
+		p.setCol(col);
+		p.setRow(row);
+		return this.gobc.ObjectsInPosition(p);
 	}
 	
 	public boolean playerWins() {

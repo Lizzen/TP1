@@ -78,6 +78,7 @@ public class ConsoleView extends GameView {
 			str.append(VERTICAL_DELIMITER);
 
 			for (int col = 0; col < Game.DIM_X; col++) {
+				
 				str.append(consoleCell(game.positionToString(col, row)));
 				//str.append(VERTICAL_DELIMITER);
 			}

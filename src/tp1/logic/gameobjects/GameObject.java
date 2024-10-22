@@ -6,11 +6,14 @@ import tp1.view.Messages;
 
 public abstract class GameObject{
 
-    private Position pos;
+    private Position posicion;
 	private boolean estaVivo;
 	private Game game;
 	public void update() {
 		return ;
+	}
+	public boolean isInPosition(Position pos) {
+		return this.posicion.equals(pos);
 	}
     
 

@@ -38,14 +38,17 @@ public class GameObjectContainer {
 	        }
 	    }
 	}
+	public void add(GameObject obj) {
+		objetos.add(obj);
+	}
 	
 	public int getDeads() {
 		return deads;
 	}
 	
-	public String ObjectsInPosition(int x, int y) {
+	public String ObjectsInPosition(Position posicion) {
 		String ret = ""; 
-		boolean esLemming = false;
+		/*boolean esLemming = false;
 		for(Lemming GO: this.lemmings) {
 			if(!GO.isWin() && GO.isEstaVivo() && GO.isInPosition(x, y)) {
 				ret += GO.toString();
@@ -59,20 +62,25 @@ public class GameObjectContainer {
 			}
 		}
 		
-		if (exitDoor.isInPosition(x, y)) ret += Messages.EXIT_DOOR;
+		if (exitDoor.isInPosition(x, y)) ret += Messages.EXIT_DOOR;*/
+		for(GameObject Go: this.objetos) {
+			if(Go.isInPosition(posicion))
+				ret+=Go.toString();
+		}
 
 		return ret;
 	}
 	
 	public int numLemmingsInBoard() {
-		int ret = 0;
+		/*int ret = 0;
 		
 		for(Lemming GO: this.lemmings) {
 			if(GO.isEstaVivo() && !GO.isWin()) {
 				ret++;
 			}
 		}
-		return ret;
+		return ret;*/
+		return this.nlemmings;
 	}
 	
 	public int numLemmingsExit() {
