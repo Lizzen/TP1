@@ -4,7 +4,7 @@ import tp1.logic.*;
 import tp1.logic.lemmingRoles.WalkerRole;
 import tp1.view.Messages;
 
-public class Lemming {
+public class Lemming extends GameObject {
 
 	private Position pos;
 	private boolean estaVivo;
@@ -26,6 +26,7 @@ public class Lemming {
 		this.isWin = false;
 		this.direccion = Direction.RIGHT;
 		this.role = new WalkerRole(game);
+		this.game.addLemings();
 	}
 	
 	

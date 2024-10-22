@@ -4,30 +4,31 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import tp1.logic.gameobjects.ExitDoor;
+import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.Lemming;
 import tp1.logic.gameobjects.Wall;
 import tp1.view.Messages;
 
-
 public class GameObjectContainer {
 	protected Game game;
-	protected int x, y;
-	private  ArrayList<Lemming> lemmings;
+	private int x, y;
+	private  ArrayList<GameObject> objetos;
 	private  ArrayList<Wall> walls;
 	private  ExitDoor exitDoor;
 	private int deads = 0;
+	private int nlemmings=0;
 	
 	public GameObjectContainer(Game game) {
 		this.game = game;
-		this.lemmings = new ArrayList<Lemming>();
+		this.objetos = new ArrayList<GameObject>();
 		this.walls = new ArrayList<Wall>();
 		this.exitDoor = null;
 	}
 	
 	public void update() {
-	    Iterator<Lemming> iterator = lemmings.iterator();
+	    Iterator<GameObject> iterator = lemmings.iterator();
 	    while (iterator.hasNext()) {
-	        Lemming GO = iterator.next();
+	    	GameObject GO = iterator.next();
 	        if (GO.isEstaVivo() && !GO.isWin()) {
 	            GO.update();
 	        }
@@ -84,8 +85,8 @@ public class GameObjectContainer {
 		return ret;
 	}
 	
-    public void addLemming(Lemming lemming) {
-    	this.lemmings.add(lemming);
+    public void addLemming() {
+    	this.nlemmings++;
     }
     
     public void addWall(Wall wall) {

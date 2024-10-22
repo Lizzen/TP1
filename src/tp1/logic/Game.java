@@ -22,7 +22,9 @@ public class Game {
 		this.gobc = new GameObjectContainer(this);
 		initGame(this.nLevel);
 	}
-	
+	public void addLemings() {//incrementa el numero de lemmings
+		this.gobc.addLemming();
+	}
 	public void initGame(int nLevel){
 		this.lemmingsToWin = 2;
 		this.lemming = new Lemming(this, 3, 2); this.gobc.addLemming(this.lemming);
