@@ -1,6 +1,7 @@
 package tp1.logic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.Lemming;
@@ -14,6 +15,7 @@ public class GameObjectContainer {
 	private  ArrayList<Lemming> lemmings;
 	private  ArrayList<Wall> walls;
 	private  ExitDoor exitDoor;
+	private int deads = 0;
 	
 	public GameObjectContainer(Game game) {
 		this.game = game;
@@ -23,18 +25,21 @@ public class GameObjectContainer {
 	}
 	
 	public void update() {
-		for(Lemming GO: this.lemmings) {
-			if (GO.isEstaVivo() || !GO.isWin()) {
-				GO.update();
-			}
-			else if (!GO.isEstaVivo()) {
-				removeDead(GO);
-			}
-		}
+	    Iterator<Lemming> iterator = lemmings.iterator();
+	    while (iterator.hasNext()) {
+	        Lemming GO = iterator.next();
+	        if (GO.isEstaVivo() && !GO.isWin()) {
+	            GO.update();
+	        }
+	        if (!GO.isEstaVivo()) {
+	            iterator.remove(); 
+	            deads++;
+	        }
+	    }
 	}
 	
-	public void removeDead(Lemming lemming) {
-		lemmings.remove(lemming);
+	public int getDeads() {
+		return deads;
 	}
 	
 	public String ObjectsInPosition(int x, int y) {

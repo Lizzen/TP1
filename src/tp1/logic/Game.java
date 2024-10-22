@@ -69,9 +69,7 @@ public class Game {
 	}
 
 	public int numLemmingsDead() {
-		int ret = 0;
-			ret = this.gobc.getLemmings() - (numLemmingsInBoard() + numLemmingsExit()); 
-		return ret;
+		return this.gobc.getDeads();
 	}
 
 	public int numLemmingsExit() {
