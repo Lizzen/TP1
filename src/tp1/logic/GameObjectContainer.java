@@ -26,7 +26,7 @@ public class GameObjectContainer {
 	}
 	
 	public void update() {
-	    Iterator<GameObject> iterator = lemmings.iterator();
+	    Iterator<GameObject> iterator = objetos.iterator();
 	    while (iterator.hasNext()) {
 	    	GameObject GO = iterator.next();
 	        if (GO.isEstaVivo() && !GO.isWin()) {
@@ -48,21 +48,7 @@ public class GameObjectContainer {
 	
 	public String ObjectsInPosition(Position posicion) {
 		String ret = ""; 
-		/*boolean esLemming = false;
-		for(Lemming GO: this.lemmings) {
-			if(!GO.isWin() && GO.isEstaVivo() && GO.isInPosition(x, y)) {
-				ret += GO.toString();
-				esLemming = true;
-			}
-		}
-		
-		if (!esLemming) {
-			for(Wall GO: this.walls) {
-				if(GO.isInPosition(x, y)) ret = Messages.WALL;			
-			}
-		}
-		
-		if (exitDoor.isInPosition(x, y)) ret += Messages.EXIT_DOOR;*/
+
 		for(GameObject Go: this.objetos) {
 			if(Go.isInPosition(posicion))
 				ret+=Go.toString();
@@ -72,24 +58,16 @@ public class GameObjectContainer {
 	}
 	
 	public int numLemmingsInBoard() {
-		/*int ret = 0;
-		
-		for(Lemming GO: this.lemmings) {
-			if(GO.isEstaVivo() && !GO.isWin()) {
-				ret++;
-			}
-		}
-		return ret;*/
 		return this.nlemmings;
 	}
 	
 	public int numLemmingsExit() {
 		int ret = 0;
-		for(Lemming GO: this.lemmings) {
+		/*for(Lemming GO: this.lemmings) {
 			if(GO.isWin()) {
 				ret++;
 			}
-		}
+		}*/
 		return ret;
 	}
 	
@@ -119,8 +97,8 @@ public class GameObjectContainer {
     	return this.walls.size();
     }
     
-    public int getLemmings() {
-    	return this.lemmings.size();
+    public int getObjetosSize() {
+    	return this.objetos.size();
     }
 
 	public void addExitDoor(ExitDoor exitDoor) {

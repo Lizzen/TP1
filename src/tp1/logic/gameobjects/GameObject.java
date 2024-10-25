@@ -9,14 +9,26 @@ public abstract class GameObject{
     private Position posicion;
 	private boolean estaVivo;
 	private Game game;
+	private boolean isWin;
+	
 	public void update() {
 		return ;
 	}
 	public boolean isInPosition(Position pos) {
 		return this.posicion.equals(pos);
 	}
-    
+	
+	public boolean isEstaVivo() {
+		return this.estaVivo;
+	}
+	
+	public void setEstaVivo(boolean estaVivo) {
+		this.estaVivo = estaVivo;
+	}
+	
+	public boolean isWin() {
+		return this.isWin;
+	}
 
-
-
+	
 }

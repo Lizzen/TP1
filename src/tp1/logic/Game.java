@@ -16,6 +16,7 @@ public class Game {
 	private Lemming lemming;
 	private Wall wall;
 	private ExitDoor exitDoor;
+	private boolean exit = false;
 
 	public Game(int nLevel) {
 		this.nLevel = nLevel;
@@ -104,5 +105,14 @@ public class Game {
 
 	public boolean doorCollision(int x, int y) {
 		return this.gobc.doorCollision(x, y);
+	}
+	public boolean isFinished() {
+		return  (playerWins() || playerLooses() || isExit());
+	}
+	public boolean isExit() {
+		return exit;
+	}
+	public void setExit(boolean exit) {
+		this.exit = exit;
 	}
 }
