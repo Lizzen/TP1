@@ -7,7 +7,10 @@ public class CommandGenerator {
 	
 	protected static final Command[] AVAILABLE_COMMANDS = {
 			new NoneCommand(),
-			
+			new EspaceCommand(),
+			new ExitCommand(),
+			new HelpCommand(),
+			new ResetCommand(),
 	};
 	
 	

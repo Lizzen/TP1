@@ -12,21 +12,17 @@ import tp1.view.Messages;
 public class GameObjectContainer {
 	protected Game game;
 	private int x, y;
-	private  ArrayList<GameObject> objetos;
-	private  ArrayList<Wall> walls;
-	private  ExitDoor exitDoor;
+	private  ArrayList<GameObject> objects;
 	private int deads = 0;
-	private int nlemmings=0;
+	private int nlemmings = 0;
 	
 	public GameObjectContainer(Game game) {
 		this.game = game;
-		this.objetos = new ArrayList<GameObject>();
-		this.walls = new ArrayList<Wall>();
-		this.exitDoor = null;
+		this.objects = new ArrayList<GameObject>();
 	}
 	
 	public void update() {
-	    Iterator<GameObject> iterator = objetos.iterator();
+	    Iterator<GameObject> iterator = objects.iterator();
 	    while (iterator.hasNext()) {
 	    	GameObject GO = iterator.next();
 	        if (GO.isEstaVivo() && !GO.isWin()) {
@@ -38,8 +34,12 @@ public class GameObjectContainer {
 	        }
 	    }
 	}
+	
 	public void add(GameObject obj) {
-		objetos.add(obj);
+		this.objects.add(obj);
+		if (obj.toString() == Messages.LEMMING_RIGHT) {
+			this.nlemmings++;
+		}
 	}
 	
 	public int getDeads() {
@@ -49,60 +49,47 @@ public class GameObjectContainer {
 	public String ObjectsInPosition(Position posicion) {
 		String ret = ""; 
 
-		for(GameObject Go: this.objetos) {
-			if(Go.isInPosition(posicion))
-				ret+=Go.toString();
+		for(GameObject GO: this.objects) {
+			if(GO.isInPosition(posicion) && !GO.isWin())
+				ret+=GO.toString();
 		}
 
 		return ret;
 	}
 	
 	public int numLemmingsInBoard() {
-		return this.nlemmings;
+		return nlemmings - deads - numLemmingsExit();
 	}
 	
 	public int numLemmingsExit() {
 		int ret = 0;
-		/*for(Lemming GO: this.lemmings) {
+		for(GameObject GO: this.objects) {
 			if(GO.isWin()) {
 				ret++;
 			}
-		}*/
+		}
 		return ret;
 	}
-	
-    public void addLemming() {
-    	this.nlemmings++;
-    }
-    
-    public void addWall(Wall wall) {
-    	this.walls.add(wall);
-    }
     
     public boolean getCollision(int x, int y) {
     	boolean ret = false;
-		for(Wall GO: this.walls) {
-			if(GO.isInPosition(x, y)) ret = true;			
+		for(GameObject GO: this.objects) {
+			if(GO.isInPosition(x, y) && GO.toString() == Messages.WALL) ret = true;			
 		}
 		
 		return ret;
     }
     
-    public boolean doorCollision(int x, int y) {
+    public boolean doorCollision(int x, int y) {	
+    	boolean ret = false;
+		for(GameObject GO: this.objects) {
+			if(GO.isInPosition(x, y) && GO.toString() == Messages.EXIT_DOOR) ret = true;			
+		}
 		
-		return this.exitDoor.isInPosition(x, y);
-    }
-
-	public int getWalls() {
-    	return this.walls.size();
+		return ret;
     }
     
-    public int getObjetosSize() {
-    	return this.objetos.size();
+    public int getobjectsSize() {
+    	return this.objects.size();
     }
-
-	public void addExitDoor(ExitDoor exitDoor) {
-		this.exitDoor = exitDoor;
-		
-	}
 }

@@ -2,16 +2,12 @@ package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
 import tp1.logic.Position;
+import tp1.view.Messages;
 
 public class ExitDoor extends GameObject {
-	private Position pos;
-	private Game game;
 	
 	public ExitDoor(Game game, int x, int y) {
-		this.pos = new Position();
-		this.pos.setRow(x);
-		this.pos.setCol(y);
-		this.game = game;
+		super(game, x, y);
 	}
 
 	public Position getPos() {
@@ -19,6 +15,23 @@ public class ExitDoor extends GameObject {
 	}
 	
 	public boolean isInPosition(int x, int y) {
-		return this.pos.getRow() == x && this.pos.getCol() == y;
+		return pos.getRow() == x && pos.getCol() == y;
+	}
+
+	@Override
+	public boolean isEstaVivo() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isWin() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return Messages.EXIT_DOOR;
 	}
 }

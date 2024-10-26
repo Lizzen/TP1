@@ -13,9 +13,6 @@ public class Game {
 	private int nLevel = 0;
 	private int cycle = 0;
 	private int lemmingsToWin;
-	private Lemming lemming;
-	private Wall wall;
-	private ExitDoor exitDoor;
 	private boolean exit = false;
 
 	public Game(int nLevel) {
@@ -23,33 +20,35 @@ public class Game {
 		this.gobc = new GameObjectContainer(this);
 		initGame(this.nLevel);
 	}
-	public void addLemings() {//incrementa el numero de lemmings
-		this.gobc.addLemming();
-	}
+
 	public void initGame(int nLevel){
+		//Lemmings
 		this.lemmingsToWin = 2;
-		this.lemming = new Lemming(this, 3, 2); this.gobc.add(this.lemming);
-		this.lemming = new Lemming(this, 8, 0); this.gobc.add(this.lemming);
-		this.lemming = new Lemming(this, 0, 9); this.gobc.add(this.lemming);
+		this.gobc.add(new Lemming(this, 3, 2));
+		this.gobc.add(new Lemming(this, 8, 0));
+		this.gobc.add(new Lemming(this, 0, 9));
+		if (nLevel == 1) {
+			this.gobc.add(new Lemming(this, 3, 3));
+		}
+		
+		//Walls
 		for(int i = 2; i < 5; i++) {
-			this.wall = new Wall(this, 4, i); this.gobc.add(this.wall);
+			this.gobc.add(new Wall(this, 4, i));
 		}
 		for(int i = 8; i < 11; i++) {
-			this.wall = new Wall(this, 1, i); this.gobc.add(this.wall);
-			this.wall = new Wall(this, 9, i); this.gobc.add(this.wall);
+			this.gobc.add(new Wall(this, 1, i));
+			this.gobc.add(new Wall(this, 9, i));
 		}
 		for(int i = 4; i < 8; i++) {
-			this.wall = new Wall(this, 6, i); this.gobc.add(this.wall);
+			this.gobc.add(new Wall(this, 6, i));
 		}
-		this.wall = new Wall(this, 5, 7); this.gobc.add(this.wall);
-		this.wall = new Wall(this, 8, 8); this.gobc.add(this.wall);
-		this.wall = new Wall(this, 9, 0); this.gobc.add(this.wall);
-		this.wall = new Wall(this, 9, 1); this.gobc.add(this.wall);
-		this.exitDoor = new ExitDoor(this, 5, 4); this.gobc.add(this.exitDoor);
+		this.gobc.add(new Wall(this, 5, 7));
+		this.gobc.add(new Wall(this, 8, 8));
+		this.gobc.add(new Wall(this, 9, 0));
+		this.gobc.add(new Wall(this, 9, 1));
 		
-		if (nLevel == 1) {
-			this.lemming = new Lemming(this, 3, 3); this.gobc.add(this.lemming);
-		}
+		//ExitDoor
+		this.gobc.add(new ExitDoor(this, 5, 4));
 	}
 	
 	public void update() {

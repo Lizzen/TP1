@@ -6,29 +6,25 @@ import tp1.view.Messages;
 
 public abstract class GameObject{
 
-    private Position posicion;
-	private boolean estaVivo;
-	private Game game;
-	private boolean isWin;
+    protected Position pos;
+	protected Game game;
 	
+	public GameObject(Game game, int row, int col) {
+		this.game = game;
+		pos = new Position();
+		this.pos = new Position();
+		this.pos.setRow(row);
+		this.pos.setCol(col);
+	}
 	public void update() {
 		return ;
 	}
 	public boolean isInPosition(Position pos) {
-		return this.posicion.equals(pos);
+		return this.pos.equals(pos);
 	}
 	
-	public boolean isEstaVivo() {
-		return this.estaVivo;
-	}
-	
-	public void setEstaVivo(boolean estaVivo) {
-		this.estaVivo = estaVivo;
-	}
-	
-	public boolean isWin() {
-		return this.isWin;
-	}
-
-	
+	public abstract boolean isEstaVivo();
+	public abstract boolean isWin();
+	public abstract String toString();
+	public abstract boolean isInPosition(int x, int y);
 }
