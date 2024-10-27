@@ -11,11 +11,9 @@ import tp1.view.Messages;
 
 public class GameObjectContainer {
 	protected Game game;
-	private int x, y;
 	private  ArrayList<GameObject> objects;
 	private int deads = 0;
-	private int nlemmings = 0;
-	
+
 	public GameObjectContainer(Game game) {
 		this.game = game;
 		this.objects = new ArrayList<GameObject>();
@@ -37,9 +35,6 @@ public class GameObjectContainer {
 	
 	public void add(GameObject obj) {
 		this.objects.add(obj);
-		if (obj.toString() == Messages.LEMMING_RIGHT) {
-			this.nlemmings++;
-		}
 	}
 	
 	public int getDeads() {
@@ -55,10 +50,6 @@ public class GameObjectContainer {
 		}
 
 		return ret;
-	}
-	
-	public int numLemmingsInBoard() {
-		return nlemmings - deads - numLemmingsExit();
 	}
 	
 	public int numLemmingsExit() {

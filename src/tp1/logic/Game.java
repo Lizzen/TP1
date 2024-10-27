@@ -13,6 +13,7 @@ public class Game {
 	private int nLevel = 0;
 	private int cycle = 0;
 	private int lemmingsToWin;
+	private int numLemmingsInBoard = 0;
 	private boolean exit = false;
 
 	public Game(int nLevel) {
@@ -27,8 +28,10 @@ public class Game {
 		this.gobc.add(new Lemming(this, 3, 2));
 		this.gobc.add(new Lemming(this, 8, 0));
 		this.gobc.add(new Lemming(this, 0, 9));
+		numLemmingsInBoard += 3;
 		if (nLevel == 1) {
 			this.gobc.add(new Lemming(this, 3, 3));
+			numLemmingsInBoard++;
 		}
 		
 		//Walls
@@ -67,7 +70,7 @@ public class Game {
 	}
 
 	public int numLemmingsInBoard() {
-		return this.gobc.numLemmingsInBoard();
+		return numLemmingsInBoard - numLemmingsDead() - numLemmingsExit();
 	}
 
 	public int numLemmingsDead() {
