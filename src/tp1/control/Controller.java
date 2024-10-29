@@ -2,8 +2,8 @@ package tp1.control;
 
 import java.util.Scanner;
 
-import tp1.control.commands.Command;
-import tp1.control.commands.CommandGenerator;
+import tp1.control.Command;
+import tp1.control.CommandGenerator;
 import tp1.logic.Game;
 import tp1.view.GameView;
 import tp1.view.Messages;
