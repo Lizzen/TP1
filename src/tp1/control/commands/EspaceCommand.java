@@ -3,7 +3,7 @@ package tp1.control.commands;
 import tp1.logic.Game;
 import tp1.view.GameView;
 
-public class EspaceCommand extends Command {
+public class EspaceCommand extends NoParamsCommand {
 	
 	private static final String NAME = "\"";
 	private static final String SHORTCUT = "";
@@ -21,5 +21,4 @@ public class EspaceCommand extends Command {
 		view.showGame();
 		return false;
 	}
-
 }

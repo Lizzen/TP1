@@ -4,12 +4,12 @@ import tp1.logic.Game;
 import tp1.view.GameView;
 import tp1.view.Messages;
 
-public class ResetCommand extends Command {
+public class ResetCommand extends NoParamsCommand {
 	
-	private static final String NAME = "none";
-	private static final String SHORTCUT = "n";
-	private static final String DETAILS = "[n]one | \"\"";
-	private static final String HELP = "user does not perform any action";
+	private static final String NAME = Messages.COMMAND_RESET_NAME;
+	private static final String SHORTCUT =  Messages.COMMAND_RESET_SHORTCUT;
+	private static final String DETAILS =  Messages.COMMAND_RESET_DETAILS;
+	private static final String HELP =  Messages.COMMAND_RESET_HELP;
 	
 	public ResetCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
@@ -22,5 +22,4 @@ public class ResetCommand extends Command {
 		view.showGame();
 		return false;
 	}
-
 }

@@ -17,10 +17,21 @@ public abstract class Command {
 		HELP = help;
 	}
 	
-	public boolean matchCommandName(String name) {
-		return this.NAME.equalsIgnoreCase(name) || this.SHORTCUT.equalsIgnoreCase(name);
+	public abstract boolean execute (Game game, GameView view);
+
+	public abstract Command parse(String[] words);
+	
+	protected boolean matchCommandName(String name) {
+		return getShortcut().equalsIgnoreCase(name) 
+				|| getName().equalsIgnoreCase(name);
+
 	}
 	
+	public String helpText() {
+		return getDetails() + " : " + getHelp() + "\n"; 
+	}
+	
+	// Getters & Setters
 	protected String getDetails() {		
 		return this.DETAILS;
 	}
@@ -36,6 +47,4 @@ public abstract class Command {
 	protected String getShortcut() {
 		return this.SHORTCUT;
 	}
-
-	public abstract boolean execute (Game game, GameView view);
 }

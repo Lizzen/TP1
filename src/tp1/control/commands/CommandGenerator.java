@@ -1,30 +1,44 @@
 package tp1.control.commands;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CommandGenerator {
 	public CommandGenerator() {
 		
 	}
 	
-	protected static final Command[] AVAILABLE_COMMANDS = {
-			new NoneCommand(),
-			new EspaceCommand(),
-			new ExitCommand(),
-			new HelpCommand(),
-			new ResetCommand(),
-	};
+	private static final List<Command> AVAILABLE_COMMANDS =
+			Arrays.asList( 
+					new NoneCommand(),
+					new EspaceCommand(),
+					new ExitCommand(),
+					new HelpCommand(),
+					new ResetCommand()
+			);
+
 	
 	
 	public static Command parse(String[] words) {
 		Command ret = null;
+		
 		for (Command C: AVAILABLE_COMMANDS) {
-			if(C.matchCommandName(words[0])) {
-				if (words.length == 1) {			
-					ret = C;
-					if(ret != null) return ret;		
-				}
-			} 
+			ret = C.parse(words);
+			if (ret != null) {
+				return ret;
+			}
 		}
 
+		return null;
+	}
+	
+	public static String commandHelp() {
+		String ret = "";
+		
+		for (Command C: AVAILABLE_COMMANDS) {
+			ret += C.helpText();
+		}
+		
 		return ret;
 	}
 }
