@@ -18,7 +18,7 @@ public class Lemming extends GameObject {
 		this.enAire = false;
 		this.isWin = false;
 		this.direccion = Direction.RIGHT;
-		this.role = new WalkerRole(game);
+		this.role = new WalkerRole();
 	}
 	
 	
@@ -136,5 +136,19 @@ public class Lemming extends GameObject {
 
 	public void setWin(boolean win) {
 		this.isWin =  win;
+	}
+
+
+	@Override
+	public boolean collision(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean doorCollision(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

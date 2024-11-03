@@ -11,10 +11,10 @@ public class CommandGenerator {
 	private static final List<Command> AVAILABLE_COMMANDS =
 			Arrays.asList( 
 					new NoneCommand(),
-					new EspaceCommand(),
-					new ExitCommand(),
+					new ResetCommand(),
 					new HelpCommand(),
-					new ResetCommand()
+					//new EspaceCommand(),
+					new ExitCommand()
 			);
 
 	
@@ -22,6 +22,9 @@ public class CommandGenerator {
 	public static Command parse(String[] words) {
 		Command ret = null;
 		
+		if (words[0].equalsIgnoreCase("")) {
+			return AVAILABLE_COMMANDS.getFirst();
+		}
 		for (Command C: AVAILABLE_COMMANDS) {
 			ret = C.parse(words);
 			if (ret != null) {

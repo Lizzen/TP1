@@ -34,4 +34,18 @@ public class ExitDoor extends GameObject {
 	public String toString() {
 		return Messages.EXIT_DOOR;
 	}
+
+	@Override
+	public boolean collision(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean doorCollision(int x, int y) {
+		if (isInPosition(x, y)) {
+			return true;
+		}
+		return false;
+	}
 }

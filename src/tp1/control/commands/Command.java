@@ -1,6 +1,6 @@
 package tp1.control.commands;
 
-import tp1.logic.Game;
+import tp1.logic.GameModel;
 import tp1.view.GameView;
 import tp1.view.Messages;
 
@@ -17,7 +17,7 @@ public abstract class Command {
 		HELP = help;
 	}
 	
-	public abstract boolean execute (Game game, GameView view);
+	public abstract boolean execute (GameModel game, GameView view);
 
 	public abstract Command parse(String[] words);
 	
@@ -28,7 +28,7 @@ public abstract class Command {
 	}
 	
 	public String helpText() {
-		return getDetails() + " : " + getHelp() + "\n"; 
+		return Messages.LINE_TAB.formatted(Messages.COMMAND_HELP_TEXT.formatted(getDetails(), getHelp())); 
 	}
 	
 	// Getters & Setters

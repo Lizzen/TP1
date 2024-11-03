@@ -1,15 +1,16 @@
 package tp1.control.commands;
 
 import tp1.logic.Game;
+import tp1.logic.GameModel;
 import tp1.view.GameView;
 import tp1.view.Messages;
 
 public class NoneCommand extends NoParamsCommand {
 	
-	private static final String NAME = Messages.COMMAND_NONE_NAME;
-	private static final String SHORTCUT =  Messages.COMMAND_NONE_SHORTCUT;
-	private static final String DETAILS =  Messages.COMMAND_NONE_DETAILS;
-	private static final String HELP =  Messages.COMMAND_NONE_HELP;
+	private static final String NAME = Messages.COMMAND_UPDATE_NAME;
+	private static final String SHORTCUT =  Messages.COMMAND_UPDATE_SHORTCUT;
+	private static final String DETAILS =  Messages.COMMAND_UPDATE_DETAILS;
+	private static final String HELP =  Messages.COMMAND_UPDATE_HELP;
 	
 	public NoneCommand() {
 		super(NAME, SHORTCUT, DETAILS, HELP);
@@ -17,7 +18,7 @@ public class NoneCommand extends NoParamsCommand {
 	
 	
 	@Override
-	public boolean execute(Game game, GameView view) {
+	public boolean execute(GameModel game, GameView view) {
 		game.update();
 		view.showGame();
 		return false;

@@ -5,7 +5,7 @@ import tp1.logic.gameobjects.Lemming;
 import tp1.view.Messages;
 import tp1.logic.gameobjects.Wall;
 
-public class Game {
+public class Game implements GameModel, GameStatus, GameWorld{
 
 	public static final int DIM_X = 10;
 	public static final int DIM_Y = 10;
@@ -60,6 +60,7 @@ public class Game {
 	}
 	
 	public void reset() {
+		this.numLemmingsInBoard = 0;
 		this.gobc = new GameObjectContainer(this);
 		initGame(this.nLevel);
 		this.cycle = 0;

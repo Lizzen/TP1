@@ -63,21 +63,19 @@ public class GameObjectContainer {
 	}
     
     public boolean getCollision(int x, int y) {
-    	boolean ret = false;
 		for(GameObject GO: this.objects) {
-			if(GO.isInPosition(x, y) && GO.toString() == Messages.WALL) ret = true;			
+			if(GO.collision(x, y)) return true;			
 		}
 		
-		return ret;
+		return false;
     }
     
     public boolean doorCollision(int x, int y) {	
-    	boolean ret = false;
 		for(GameObject GO: this.objects) {
-			if(GO.isInPosition(x, y) && GO.toString() == Messages.EXIT_DOOR) ret = true;			
+			if(GO.doorCollision(x, y)) return true;			
 		}
 		
-		return ret;
+		return false;
     }
     
     public int getobjectsSize() {

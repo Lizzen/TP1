@@ -7,7 +7,7 @@ import tp1.view.Messages;
 public abstract class GameObject{
 
     protected Position pos;
-	protected Game game;
+	protected GameWorld game;
 	
 	public GameObject(Game game, int row, int col) {
 		this.game = game;
@@ -27,4 +27,6 @@ public abstract class GameObject{
 	public abstract boolean isWin();
 	public abstract String toString();
 	public abstract boolean isInPosition(int x, int y);
+	public abstract boolean collision (int x, int y);
+	public abstract boolean doorCollision (int x, int y);
 }
