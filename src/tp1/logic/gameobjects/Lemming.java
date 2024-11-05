@@ -1,8 +1,8 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.*;
+import tp1.logic.lemmingRoles.LemmingRole;
 import tp1.logic.lemmingRoles.WalkerRole;
-import tp1.view.Messages;
 
 public class Lemming extends GameObject {
 	private boolean estaVivo;
@@ -10,7 +10,7 @@ public class Lemming extends GameObject {
 	private int caida = 0;
 	private boolean enAire;
 	private Direction direccion;
-	private WalkerRole role;
+	private LemmingRole role;
 	
 	public Lemming(Game game, int x, int y) {
 		super(game, x, y);
@@ -20,7 +20,6 @@ public class Lemming extends GameObject {
 		this.direccion = Direction.RIGHT;
 		this.role = new WalkerRole();
 	}
-	
 	
 	public void update() {
 		this.role.play(this);
@@ -72,11 +71,27 @@ public class Lemming extends GameObject {
 		return this.role.getIcon(this);
 	}
 	
-	public boolean isEstaVivo() {
-		return estaVivo;
+	public boolean isInPosition(int x, int y) {
+		return pos.getRow() == x && pos.getCol() == y;
+	}
+	
+	@Override
+	public boolean collision(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
+	@Override
+	public boolean doorCollision(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	public void disableRole() {
+		this.role = new WalkerRole();
+	}
 
+	// SETTERS
 	public void setEstaVivo(boolean estaVivo) {
 		this.estaVivo = estaVivo;
 	}
@@ -88,7 +103,33 @@ public class Lemming extends GameObject {
 	public void setEnAire(boolean enAire) {
 		this.enAire = enAire;
 	}
+	
+	public void setCaida(int caida) {
+		this.caida = caida;
+	}
+	
+	public void setPos(Position pos) {
+		this.pos = pos;
+	}
+	
+	public void setDireccion(Direction direccion) {
+		this.direccion = direccion;
+	}
+	
+	public void setWin(boolean win) {
+		this.isWin =  win;
+	}
+	
+	public boolean setRole(LemmingRole role) {
+		if (role != this.role) {
+			this.role = role;
+			return true;
+		}
 
+		return false;
+	}
+	
+	// GETTERS
 	public boolean getEstaVivo() {
 		return this.estaVivo;
 	}
@@ -97,58 +138,25 @@ public class Lemming extends GameObject {
 		return caida;
 	}
 
-
-	public void setCaida(int caida) {
-		this.caida = caida;
-	}
-	
-	public boolean isInPosition(int x, int y) {
-		return pos.getRow() == x && pos.getCol() == y;
-	}
-
 	public Position getPos() {
 		return pos;
-	}
-
-	public void setPos(Position pos) {
-		this.pos = pos;
 	}
 
 	public Direction getDireccion() {
 		return direccion;
 	}
-
-	public void setDireccion(Direction direccion) {
-		this.direccion = direccion;
+	
+	public LemmingRole getRole() {
+		return role;
 	}
 
-	public WalkerRole getRole() {
-		return this.role;
-	}
-
-	public void setRole(WalkerRole role) {
-		this.role = role;
-	}
-
+	//BOOLEANS
 	public boolean isWin() {
 		return this.isWin;
 	}
 
-	public void setWin(boolean win) {
-		this.isWin =  win;
+	public boolean isEstaVivo() {
+		return estaVivo;
 	}
-
-
-	@Override
-	public boolean collision(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public boolean doorCollision(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		
 }

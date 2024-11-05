@@ -22,7 +22,7 @@ public abstract class Command {
 	public abstract Command parse(String[] words);
 	
 	protected boolean matchCommandName(String name) {
-		return getShortcut().equalsIgnoreCase(name) 
+		return getShortcut().equals(name) 
 				|| getName().equalsIgnoreCase(name);
 
 	}

@@ -105,10 +105,23 @@ public class Messages {
 	public static final String COMMAND_RESET_SHORTCUT = "r";
 	public static final String COMMAND_RESET_DETAILS = "[r]eset";
 	public static final String COMMAND_RESET_HELP = "start a new game";		
+	
+	// SETROLE
+	public static final String COMMAND_SETROLE_NAME = "setRole";
+	public static final String COMMAND_SETROLE_SHORTCUT1 = "s";
+	public static final String COMMAND_SETROLE_SHORTCUT2 = "R";
+	public static final String COMMAND_SETROLE_DETAILS = "[s]et[R]ole ROLE ROW COL";
+	public static final String COMMAND_SETROLE_HELP = "sets the lemming in position\n" + "(ROW,COL) to role ROLE\n" + "";		
 //Roles
+	// WALKER
 	public static final String WALKER_ROL_SYMBOL = "W";
 	public static final String WALKER_ROL_NAME = "Walker";
 	public static final String WALKER_ROL_HELP = "[W]alker: Lemming that walks";
+	
+	// PARACHUTE
+	public static final String PARACHUTE_ROL_SYMBOL = "P";
+	public static final String PARACHUTE_ROL_NAME = "Parachute";
+	public static final String PARACHUTE_ROL_HELP = "[W]alker: Lemming that walks";
 
 //Symbols
 	public static final String EMPTY = "";

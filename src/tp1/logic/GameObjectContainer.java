@@ -52,6 +52,16 @@ public class GameObjectContainer {
 		return ret;
 	}
 	
+	public boolean setRole(LemmingRole rol) {
+
+		for(GameObject GO: this.objects) {
+			if(GO.isInPosition(posicion) && !GO.isWin())
+				ret+=GO.toString();
+		}
+
+		return ret;
+	}
+	
 	public int numLemmingsExit() {
 		int ret = 0;
 		for(GameObject GO: this.objects) {

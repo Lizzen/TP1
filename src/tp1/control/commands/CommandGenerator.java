@@ -4,9 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CommandGenerator {
-	public CommandGenerator() {
-		
-	}
 	
 	private static final List<Command> AVAILABLE_COMMANDS =
 			Arrays.asList( 

@@ -1,8 +1,9 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.*;
-import tp1.logic.lemmingRoles.WalkerRole;
-import tp1.view.Messages;
+import tp1.logic.Game;
+import tp1.logic.GameWorld;
+import tp1.logic.Position;
+import tp1.logic.lemmingRoles.LemmingRole;
 
 public abstract class GameObject{
 
@@ -19,8 +20,13 @@ public abstract class GameObject{
 	public void update() {
 		return ;
 	}
+	
 	public boolean isInPosition(Position pos) {
 		return this.pos.equals(pos);
+	}
+	
+	public boolean setRole(LemmingRole role) {
+		return false;
 	}
 	
 	public abstract boolean isEstaVivo();
