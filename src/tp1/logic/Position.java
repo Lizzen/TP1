@@ -15,6 +15,11 @@ public class Position {
 	}
 	private int col;
 	private int row;
+	
+	public Position (int x, int y) {
+		this.row = x;
+		this.col = y;
+	}
 	public int getCol() {
 		return col;
 	}

@@ -7,6 +7,7 @@ import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.Lemming;
 import tp1.logic.gameobjects.Wall;
+import tp1.logic.lemmingRoles.LemmingRole;
 import tp1.view.Messages;
 
 public class GameObjectContainer {
@@ -52,14 +53,13 @@ public class GameObjectContainer {
 		return ret;
 	}
 	
-	public boolean setRole(LemmingRole rol) {
-
+	public boolean setRole(LemmingRole rol, Position posicion) {
 		for(GameObject GO: this.objects) {
-			if(GO.isInPosition(posicion) && !GO.isWin())
-				ret+=GO.toString();
+			if(GO.isInPosition(posicion) && GO.setRole(rol))
+				return true;
 		}
 
-		return ret;
+		return false;
 	}
 	
 	public int numLemmingsExit() {

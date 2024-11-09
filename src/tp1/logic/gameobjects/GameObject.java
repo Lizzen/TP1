@@ -12,10 +12,7 @@ public abstract class GameObject{
 	
 	public GameObject(Game game, int row, int col) {
 		this.game = game;
-		pos = new Position();
-		this.pos = new Position();
-		this.pos.setRow(row);
-		this.pos.setCol(col);
+		this.pos = new Position(row, col);
 	}
 	public void update() {
 		return ;

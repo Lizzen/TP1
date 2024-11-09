@@ -50,19 +50,23 @@ public class Lemming extends GameObject {
 		// Cambio de direccion a izquierda
 		else if ((pos.getCol() + 1 == 10 || this.game.collision(pos.getRow(), pos.getCol() + 1)) && getDireccion() == Direction.RIGHT) {
 			setDireccion(Direction.LEFT);
+			disableRole();
 		}
 		// Cambio de direccion a derecha
 		else if ((pos.getCol() - 1 == -1 || this.game.collision(pos.getRow(), pos.getCol() - 1)) && getDireccion() == Direction.LEFT) {
 			setDireccion(Direction.RIGHT);
+			disableRole();
 		}
 		// Caminar hacia la izquierda
 		else if (getDireccion().equals(Direction.LEFT)) {
 			pos.setCol(pos.getCol() - 1);
+			disableRole();
 			setCaida(0);
 		}
 		// Caminar hacia la derecha
 		else {
 			pos.setCol(pos.getCol() + 1);
+			disableRole();
 			setCaida(0);
 		}
 	}
@@ -77,6 +81,7 @@ public class Lemming extends GameObject {
 	
 	@Override
 	public boolean collision(int x, int y) {
+		
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -120,7 +120,7 @@ public class Messages {
 	
 	// PARACHUTE
 	public static final String PARACHUTE_ROL_SYMBOL = "P";
-	public static final String PARACHUTE_ROL_NAME = "Parachute";
+	public static final String PARACHUTE_ROL_NAME = "Parachuter";
 	public static final String PARACHUTE_ROL_HELP = "[W]alker: Lemming that walks";
 
 //Symbols

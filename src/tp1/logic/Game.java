@@ -4,6 +4,7 @@ import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.Lemming;
 import tp1.view.Messages;
 import tp1.logic.gameobjects.Wall;
+import tp1.logic.lemmingRoles.LemmingRole;
 
 public class Game implements GameModel, GameStatus, GameWorld{
 
@@ -88,9 +89,7 @@ public class Game implements GameModel, GameStatus, GameWorld{
 	
 	// Muestra el tablero
 	public String positionToString(int col, int row) {
-		Position p = new Position();
-		p.setCol(col);
-		p.setRow(row);
+		Position p = new Position(row, col);
 		return this.gobc.ObjectsInPosition(p);
 	}
 	
@@ -117,5 +116,9 @@ public class Game implements GameModel, GameStatus, GameWorld{
 	}
 	public void setExit(boolean exit) {
 		this.exit = exit;
+	}
+	
+	public boolean setRole(LemmingRole rol, Position pos) {
+		return this.gobc.setRole(rol, pos);
 	}
 }
