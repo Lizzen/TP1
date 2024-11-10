@@ -21,14 +21,19 @@ public class GameObjectContainer {
 	}
 	
 	public void update() {
-	    Iterator<GameObject> iterator = objects.iterator();
+		for (int i = 0; i < objects.size(); i++) {
+			GameObject object = objects.get(i);
+			object.update();
+			}
+		removeDead();
+	}
+	
+	public void removeDead() {
+	 Iterator<GameObject> iterator = objects.iterator();
 	    while (iterator.hasNext()) {
-	    	GameObject GO = iterator.next();
-	        if (GO.isEstaVivo() && !GO.isWin()) {
-	            GO.update();
-	        }
-	        if (!GO.isEstaVivo()) {
-	            iterator.remove(); 
+	        GameObject object = iterator.next();
+	        if (object.isRemove()) {
+	            iterator.remove();
 	            deads++;
 	        }
 	    }

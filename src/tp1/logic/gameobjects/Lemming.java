@@ -21,10 +21,17 @@ public class Lemming extends GameObject {
 		this.role = new WalkerRole();
 	}
 	
-	public void update() {
-		this.role.play(this);
-	}
 	
+	
+	@Override
+	public void update() {
+		if(this.estaVivo && !this.isWin) { // Si esta vivo y no ha ganado entoces juega.
+			this.role.play(this);
+		}
+	}
+
+
+
 	public void walkOrFall() {
 		// Si entra a la puerta
 		if (game.doorCollision(pos.getRow(), pos.getCol()) && getCaida() < 4) {
@@ -163,5 +170,12 @@ public class Lemming extends GameObject {
 	public boolean isEstaVivo() {
 		return estaVivo;
 	}
+
+	@Override
+	public boolean isRemove() { //si esta muerto se puede eliminar
+		// TODO Auto-generated method stub
+		return !estaVivo;
+	}
+	
 		
 }

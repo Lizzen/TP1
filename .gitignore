@@ -59,3 +59,14 @@
 .metadata/.plugins/org.eclipse.ui.workbench/dialog_settings.xml
 .metadata/.plugins/org.eclipse.ui.workbench/workingsets.xml
 .metadata/version.ini
+bin/tp1/control/Controller.class
+bin/tp1/logic/Game.class
+bin/tp1/logic/GameObjectContainer.class
+bin/tp1/logic/gameobjects/ExitDoor.class
+bin/tp1/logic/gameobjects/Lemming.class
+bin/tp1/logic/gameobjects/Wall.class
+bin/tp1/logic/Position.class
+bin/tp1/util/MyStringUtils.class
+bin/tp1/view/ConsoleColorsView.class
+bin/tp1/view/ConsoleView.class
+bin/tp1/view/Messages.class

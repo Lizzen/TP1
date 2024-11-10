@@ -32,4 +32,7 @@ public abstract class GameObject{
 	public abstract boolean isInPosition(int x, int y);
 	public abstract boolean collision (int x, int y);
 	public abstract boolean doorCollision (int x, int y);
+	public  boolean isRemove() {
+		return false;
+	}
 }
