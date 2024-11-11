@@ -21,7 +21,7 @@ public class CommandGenerator {
 		Command ret = null;
 		
 		if (words[0].equalsIgnoreCase("")) {
-			return AVAILABLE_COMMANDS.getFirst();
+			return AVAILABLE_COMMANDS.get(1);
 		}
 		for (Command C: AVAILABLE_COMMANDS) {
 			ret = C.parse(words);

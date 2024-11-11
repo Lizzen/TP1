@@ -21,73 +21,70 @@ public class Lemming extends GameObject {
 		this.role = new WalkerRole();
 	}
 	
+	@Override
 	public void update() {
 		this.role.play(this);
 	}
 	
-	public void walkOrFall() {
-		// Si entra a la puerta
-		if (game.doorCollision(pos.getRow(), pos.getCol()) && getCaida() < 4) {
-			setWin(true);
+	public void walkOrFall() { 
+		if (isEnAire()) {
+			caida++;
+			fall();
 		}
-		// Si está en el aire
-		else if(getEstaVivo() == true && !this.game.collision(pos.getRow() +1, pos.getCol())) {
-			pos.setRow(pos.getRow() + 1);
-			if (pos.getRow() == 10) {
-				setEstaVivo(false);
-			}
-			if (isEnAire()) {
-				setCaida(getCaida() + 1);
+		else {
+			walk();
+		}
+	}
+	
+	public void walk() {
+		int x = pos.getCol();
+		
+		if (this.direccion.equals(Direction.RIGHT)) {
+			if (x == 9) {
+				this.direccion = Direction.LEFT;
 			}
 			else {
-				setEnAire(true);
+				pos.setCol(x + 1);
 			}
 		}
-		// Si muere por caida
-		else if (getCaida() > 2) {
-			setEstaVivo(false);
-		}
-		// Cambio de direccion a izquierda
-		else if ((pos.getCol() + 1 == 10 || this.game.collision(pos.getRow(), pos.getCol() + 1)) && getDireccion() == Direction.RIGHT) {
-			setDireccion(Direction.LEFT);
-			disableRole();
-		}
-		// Cambio de direccion a derecha
-		else if ((pos.getCol() - 1 == -1 || this.game.collision(pos.getRow(), pos.getCol() - 1)) && getDireccion() == Direction.LEFT) {
-			setDireccion(Direction.RIGHT);
-			disableRole();
-		}
-		// Caminar hacia la izquierda
-		else if (getDireccion().equals(Direction.LEFT)) {
-			pos.setCol(pos.getCol() - 1);
-			disableRole();
-			setCaida(0);
-		}
-		// Caminar hacia la derecha
 		else {
-			pos.setCol(pos.getCol() + 1);
-			disableRole();
-			setCaida(0);
+			if (x == 0) {
+				this.direccion = Direction.RIGHT;
+			}
+			else {
+				pos.setCol(x - 1);
+			}
 		}
+		
+		if (!game.collision(pos.getRow()+1, pos.getCol())) {
+			enAire = true;
+		}
+		
+		game.receiveInteractionsFrom(this);
 	}
 	
+	public void fall() {
+		int y = pos.getRow();
+		
+		if (y == 9 || this.caida >= 3 && game.collision(pos.getRow()+1, pos.getCol())) {
+			this.estaVivo = false;
+		}
+		else {
+			pos.setRow(y + 1);
+			if (!game.receiveInteractionsFrom(this) && game.collision(pos.getRow()+1, pos.getCol())){
+				enAire = false;
+				caida = 0;
+				disableRole();
+			}
+		}
+	}
 	public String toString() {
 		return this.role.getIcon(this);
-	}
-	
-	public boolean isInPosition(int x, int y) {
-		return pos.getRow() == x && pos.getCol() == y;
 	}
 	
 	@Override
 	public boolean collision(int x, int y) {
 		
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean doorCollision(int x, int y) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -163,5 +160,37 @@ public class Lemming extends GameObject {
 	public boolean isEstaVivo() {
 		return estaVivo;
 	}
-		
+
+	@Override
+	public boolean receiveInteraction(GameItem other) {
+		return other.interactWith(this);
+	}
+
+	@Override
+	public boolean interactWith(Wall wall) {
+		return role.interactWith(wall, this);
+	}
+
+	@Override
+	public boolean interactWith(ExitDoor door) {
+		return role.interactWith(door, this);
+	}
+
+	@Override
+	public boolean isSolid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAlive() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isExit() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

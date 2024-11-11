@@ -1,11 +1,12 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
+import tp1.logic.GameItem;
 import tp1.logic.GameWorld;
 import tp1.logic.Position;
 import tp1.logic.lemmingRoles.LemmingRole;
 
-public abstract class GameObject{
+public abstract class GameObject implements GameItem{
 
     protected Position pos;
 	protected GameWorld game;
@@ -26,10 +27,19 @@ public abstract class GameObject{
 		return false;
 	}
 	
+	public boolean isSolid() {
+		return false;
+	}
+	
+	@Override
+	public boolean interactWith(Lemming lemming) { return false; }
+	@Override
+	public boolean interactWith(Wall wall) { return false; }
+	@Override
+	public boolean interactWith(ExitDoor door) { return false; }
+	
 	public abstract boolean isEstaVivo();
 	public abstract boolean isWin();
 	public abstract String toString();
-	public abstract boolean isInPosition(int x, int y);
 	public abstract boolean collision (int x, int y);
-	public abstract boolean doorCollision (int x, int y);
 }

@@ -72,17 +72,9 @@ public class GameObjectContainer {
 		return ret;
 	}
     
-    public boolean getCollision(int x, int y) {
+    public boolean getCollision(Position pos) {
 		for(GameObject GO: this.objects) {
-			if(GO.collision(x, y)) return true;			
-		}
-		
-		return false;
-    }
-    
-    public boolean doorCollision(int x, int y) {	
-		for(GameObject GO: this.objects) {
-			if(GO.doorCollision(x, y)) return true;			
+			if(GO.isInPosition(pos) && GO.isSolid()) return true;			
 		}
 		
 		return false;
@@ -91,4 +83,13 @@ public class GameObjectContainer {
     public int getobjectsSize() {
     	return this.objects.size();
     }
+
+	public boolean receiveInteractionsFrom(GameItem item) {
+		for(GameObject GO: this.objects) {
+			if (GO.receiveInteraction(item)) {
+				return true;
+			}	
+		}
+		return false;
+	}
 }

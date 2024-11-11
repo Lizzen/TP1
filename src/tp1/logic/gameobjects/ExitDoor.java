@@ -1,6 +1,7 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
+import tp1.logic.GameItem;
 import tp1.logic.Position;
 import tp1.view.Messages;
 
@@ -12,10 +13,6 @@ public class ExitDoor extends GameObject {
 
 	public Position getPos() {
 		return pos;
-	}
-	
-	public boolean isInPosition(int x, int y) {
-		return pos.getRow() == x && pos.getCol() == y;
 	}
 
 	@Override
@@ -42,10 +39,42 @@ public class ExitDoor extends GameObject {
 	}
 
 	@Override
-	public boolean doorCollision(int x, int y) {
-		if (isInPosition(x, y)) {
-			return true;
-		}
+	public boolean receiveInteraction(GameItem other) {
+		return other.interactWith(this);
+	}
+
+	@Override
+	public boolean interactWith(Lemming lemming) {
+		return false;
+	}
+
+	@Override
+	public boolean interactWith(Wall wall) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean interactWith(ExitDoor door) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isSolid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAlive() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isExit() {
+		// TODO Auto-generated method stub
 		return false;
 	}
 }

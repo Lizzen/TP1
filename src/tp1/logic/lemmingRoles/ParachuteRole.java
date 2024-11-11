@@ -1,6 +1,10 @@
 package tp1.logic.lemmingRoles;
 
+import tp1.logic.GameItem;
+import tp1.logic.Position;
+import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.Lemming;
+import tp1.logic.gameobjects.Wall;
 import tp1.view.Messages;
 
 public class ParachuteRole extends AbstractRol implements LemmingRole{
@@ -22,5 +26,30 @@ public class ParachuteRole extends AbstractRol implements LemmingRole{
 	@Override
 	public String getIcon(Lemming lemming) {
 		return ICON;
+	}
+
+	@Override
+	public boolean receiveInteraction(GameItem other, Lemming owner) {
+		
+		return false;
+	}
+
+	@Override
+	public boolean interactWith(Lemming receiver, Lemming owner) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean interactWith(Wall wall, Lemming owner) {
+		if (owner.getPos().equals(wall.getPos())) {
+			Position pos = owner.getPos();
+			pos.setRow(pos.getRow() -1);
+			owner.setPos(pos);
+			owner.disableRole();
+			return true;
+		}
+		
+		return false;
 	}
 }

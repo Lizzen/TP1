@@ -1,9 +1,9 @@
 package tp1.logic;
 
+import tp1.logic.gameobjects.GameObject;
+
 public interface GameWorld {
 
-	boolean doorCollision(int row, int col);
-
-	boolean collision(int i, int col);
-
+	boolean collision(int x, int y);
+	public boolean receiveInteractionsFrom(GameItem item);
 }

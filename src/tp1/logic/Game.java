@@ -1,6 +1,7 @@
 package tp1.logic;
 
 import tp1.logic.gameobjects.ExitDoor;
+import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.Lemming;
 import tp1.view.Messages;
 import tp1.logic.gameobjects.Wall;
@@ -101,13 +102,12 @@ public class Game implements GameModel, GameStatus, GameWorld{
 		return numLemmingsInBoard() == 0 && !playerWins();
 	}
 	
+	@Override
 	public boolean collision(int x, int y) {
-		return this.gobc.getCollision(x, y);
+		Position pos = new Position(x, y);
+		return this.gobc.getCollision(pos);
 	}
-
-	public boolean doorCollision(int x, int y) {
-		return this.gobc.doorCollision(x, y);
-	}
+	
 	public boolean isFinished() {
 		return  (playerWins() || playerLooses() || isExit());
 	}
@@ -120,5 +120,10 @@ public class Game implements GameModel, GameStatus, GameWorld{
 	
 	public boolean setRole(LemmingRole rol, Position pos) {
 		return this.gobc.setRole(rol, pos);
+	}
+
+	@Override
+	public boolean receiveInteractionsFrom(GameItem item) {
+		return this.gobc.receiveInteractionsFrom(item);
 	}
 }
