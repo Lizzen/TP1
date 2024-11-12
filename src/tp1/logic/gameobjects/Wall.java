@@ -19,15 +19,14 @@ public class Wall extends GameObject {
 	}
 
 	@Override
-	public boolean isEstaVivo() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
 	public boolean isWin() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	@Override
+	public boolean isSolid() {
+		return true;
 	}
 
 	@Override
@@ -46,22 +45,5 @@ public class Wall extends GameObject {
 	@Override
 	public boolean receiveInteraction(GameItem other) {
 		return other.interactWith(this);
-	}
-
-	@Override
-	public boolean isSolid() {
-		return true;
-	}
-
-	@Override
-	public boolean isAlive() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isExit() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

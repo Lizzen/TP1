@@ -23,9 +23,14 @@ public class SetRoleCommand extends Command{
 
 	@Override
 	public boolean execute(GameModel game, GameView view) {
-		game.setRole(role, pos);
-		game.update();
-		view.showGame();
+		if (game.setRole(role, pos)) {
+			game.update();
+			view.showGame();
+		}
+		else {
+			view.showError("SetRoleCommand error (Incorrect position or no object in that position admits that role)");
+		}
+
 		return false;
 	}
 	
@@ -35,7 +40,7 @@ public class SetRoleCommand extends Command{
 
 	@Override
 	public Command parse(String[] words) {
-		if(matchCommandName(words[0])) {
+		if(matchCommandName(words[0]) && words.length < 5) {
 			int x =  words[2].charAt(0) - 'A';
 			int y = Integer.parseInt(words[3]) - 1;
 			role = LemmingRoleFactory.parse(words[1]);
@@ -45,6 +50,13 @@ public class SetRoleCommand extends Command{
 			}
 		} 
 		return null;
+	}
+	
+	@Override
+	public String helpText() {
+		String ret = Messages.LINE_TAB.formatted(Messages.COMMAND_HELP_TEXT.formatted(getDetails(), getHelp()));
+		ret += LemmingRoleFactory.commandHelp();
+		return ret; 
 	}
 
 }

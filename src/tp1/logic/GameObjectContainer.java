@@ -24,12 +24,14 @@ public class GameObjectContainer {
 	    Iterator<GameObject> iterator = objects.iterator();
 	    while (iterator.hasNext()) {
 	    	GameObject GO = iterator.next();
-	        if (GO.isEstaVivo() && !GO.isWin()) {
+	        if (GO.isAlive() && !GO.isWin()) {
 	            GO.update();
 	        }
-	        if (!GO.isEstaVivo()) {
+	        if (!GO.isAlive()) {
 	            iterator.remove(); 
-	            deads++;
+	            if (!GO.isSolid()) {
+		            deads++;
+	            }
 	        }
 	    }
 	}

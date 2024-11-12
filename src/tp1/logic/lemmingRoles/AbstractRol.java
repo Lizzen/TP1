@@ -1,15 +1,22 @@
 package tp1.logic.lemmingRoles;
 
 import tp1.logic.GameItem;
+import tp1.logic.Position;
 import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.Lemming;
+import tp1.logic.gameobjects.MetalWall;
 import tp1.logic.gameobjects.Wall;
+import tp1.view.Messages;
 
 public abstract class AbstractRol implements LemmingRole{
 	private final String NAME;
+	private final String HELP;
+	private final String DETAILS;
 	
-	public AbstractRol(String name) {
+	public AbstractRol(String name, String help, String details) {
 		NAME = name;
+		HELP = help;
+		DETAILS = details;
 	}
 	
 	protected boolean matchRolName(String name) {
@@ -18,6 +25,18 @@ public abstract class AbstractRol implements LemmingRole{
 	
 	public String getName() {
 		return NAME;
+	}
+	
+	public String getHelp() {
+		return HELP;
+	}
+	
+	public String getDetails() {
+		return DETAILS;
+	}
+	
+	public String helpText() {
+		return Messages.LINE_TAB.formatted(Messages.COMMAND_HELP_TEXT.formatted(getDetails() , getHelp())); 
 	}
 
 	public LemmingRole parse(String input) {
@@ -28,15 +47,22 @@ public abstract class AbstractRol implements LemmingRole{
 		return null;
 	}
 	
+	@Override
 	public boolean receiveInteraction(GameItem other, Lemming owner) {
 		return false;
 	}
+	
+	@Override
 	public boolean interactWith(Lemming receiver, Lemming owner) {
 		return false;
 	}
+	
+	@Override
 	public boolean interactWith(Wall wall, Lemming owner) {
 		return false;
 	}
+	
+	@Override
 	public boolean interactWith(ExitDoor door, Lemming owner) {
 		if (owner.getPos().equals(door.getPos())){
 			if (owner.isExit()) {
@@ -49,5 +75,16 @@ public abstract class AbstractRol implements LemmingRole{
 		}
 		
 		return false;
+	}
+	
+	@Override
+	public boolean interactWith(MetalWall metalWall, Lemming owner) {
+		return false;
+	}
+	
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		AbstractRol p = (AbstractRol) obj;
+		return p.NAME == this.NAME;
 	}
 }

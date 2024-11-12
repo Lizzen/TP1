@@ -5,7 +5,6 @@ import tp1.logic.lemmingRoles.LemmingRole;
 import tp1.logic.lemmingRoles.WalkerRole;
 
 public class Lemming extends GameObject {
-	private boolean estaVivo;
 	private boolean isWin;
 	private boolean exit;
 	private int caida = 0;
@@ -15,7 +14,6 @@ public class Lemming extends GameObject {
 	
 	public Lemming(Game game, int x, int y) {
 		super(game, x, y);
-		this.estaVivo = true;
 		this.enAire = false;
 		this.isWin = false;
 		this.exit = false;
@@ -72,14 +70,13 @@ public class Lemming extends GameObject {
 			int y = pos.getRow();
 			
 			if (y == 9 || this.caida >= 3 && game.collision(pos.getRow()+1, pos.getCol())) {
-				this.estaVivo = false;
+				this.alive = false;
 			}
 			else {
 				pos.setRow(y + 1);
 				if (this.caida < 3 && game.collision(pos.getRow()+1, pos.getCol())){
 					enAire = false;
 					caida = 0;
-					disableRole();
 				}
 			}
 		}
@@ -88,6 +85,17 @@ public class Lemming extends GameObject {
 			walk();
 ;		}
 	}
+	
+	public void cave() {
+		int y = pos.getRow() + 1;
+		pos.setRow(y);
+		if (!game.receiveInteractionsFrom(this)){
+			caida++;
+			enAire = true;
+			disableRole();
+		}
+	}
+	
 	public String toString() {
 		return this.role.getIcon(this);
 	}
@@ -103,11 +111,7 @@ public class Lemming extends GameObject {
 		this.role = new WalkerRole();
 	}
 
-	// SETTERS
-	public void setEstaVivo(boolean estaVivo) {
-		this.estaVivo = estaVivo;
-	}
-	
+	// SETTERS	
 	public boolean isEnAire() {
 		return enAire;
 	}
@@ -133,7 +137,7 @@ public class Lemming extends GameObject {
 	}
 	
 	public boolean setRole(LemmingRole role) {
-		if (role != this.role) {
+		if (!this.role.equals(role)) {
 			this.role = role;
 			return true;
 		}
@@ -146,10 +150,6 @@ public class Lemming extends GameObject {
 	}
 	
 	// GETTERS
-	public boolean getEstaVivo() {
-		return this.estaVivo;
-	}
-
 	public int getCaida() {
 		return caida;
 	}
@@ -170,11 +170,7 @@ public class Lemming extends GameObject {
 	public boolean isWin() {
 		return this.isWin;
 	}
-
-	public boolean isEstaVivo() {
-		return estaVivo;
-	}
-
+	
 	@Override
 	public boolean receiveInteraction(GameItem other) {
 		return other.interactWith(this);
@@ -189,17 +185,10 @@ public class Lemming extends GameObject {
 	public boolean interactWith(ExitDoor door) {
 		return role.interactWith(door, this);
 	}
-
+	
 	@Override
-	public boolean isSolid() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isAlive() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean interactWith(MetalWall metalWall) {
+		return role.interactWith(metalWall, this);
 	}
 
 	@Override

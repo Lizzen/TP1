@@ -111,17 +111,25 @@ public class Messages {
 	public static final String COMMAND_SETROLE_SHORTCUT1 = "s";
 	public static final String COMMAND_SETROLE_SHORTCUT2 = "R";
 	public static final String COMMAND_SETROLE_DETAILS = "[s]et[R]ole ROLE ROW COL";
-	public static final String COMMAND_SETROLE_HELP = "sets the lemming in position\n" + "(ROW,COL) to role ROLE\n" + "";		
+	public static final String COMMAND_SETROLE_HELP = "sets the lemming in position " + "(ROW,COL) to role ROLE";		
 //Roles
 	// WALKER
 	public static final String WALKER_ROL_SYMBOL = "W";
 	public static final String WALKER_ROL_NAME = "Walker";
-	public static final String WALKER_ROL_HELP = "[W]alker: Lemming that walks";
+	public static final String WALKER_ROL_DETAILS = "   [W]alker";
+	public static final String WALKER_ROL_HELP = "Lemming that walks";
 	
 	// PARACHUTE
 	public static final String PARACHUTE_ROL_SYMBOL = "P";
 	public static final String PARACHUTE_ROL_NAME = "Parachuter";
-	public static final String PARACHUTE_ROL_HELP = "[W]alker: Lemming that walks";
+	public static final String PARACHUTE_ROL_DETAILS = "   [P]arachuter";
+	public static final String PARACHUTE_ROL_HELP = "Lemming falls with a parachute";
+	
+	// PARACHUTE
+	public static final String DOWNCAVER_ROL_SYMBOL = "D";
+	public static final String DOWNCAVER_ROL_NAME = "DownCaver";
+	public static final String DOWNCAVER_ROL_DETAILS = "   [D]own[C]aver";
+	public static final String DOWNCAVER_ROL_HELP = "Lemming caves downwards";
 
 //Symbols
 	public static final String EMPTY = "";

@@ -109,7 +109,7 @@ public class Game implements GameModel, GameStatus, GameWorld{
 	}
 	
 	public boolean isFinished() {
-		return  (playerWins() || playerLooses() || isExit());
+		return  (playerLooses() || isExit() || numLemmingsInBoard() == 0 && playerWins());
 	}
 	public boolean isExit() {
 		return exit;

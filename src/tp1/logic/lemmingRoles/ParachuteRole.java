@@ -10,11 +10,12 @@ import tp1.view.Messages;
 public class ParachuteRole extends AbstractRol implements LemmingRole{
 	
 	private static final String NAME = Messages.PARACHUTE_ROL_NAME;
+	private static final String DETAILS = Messages.PARACHUTE_ROL_DETAILS;
 	private static final String HELP = Messages.PARACHUTE_ROL_HELP;
 	private static final String ICON = Messages.LEMMING_PARACHUTE;
 	
 	public ParachuteRole() {
-		super(NAME);
+		super(NAME, HELP, DETAILS);
 	}
 
 	@Override
@@ -26,18 +27,6 @@ public class ParachuteRole extends AbstractRol implements LemmingRole{
 	@Override
 	public String getIcon(Lemming lemming) {
 		return ICON;
-	}
-
-	@Override
-	public boolean receiveInteraction(GameItem other, Lemming owner) {
-		
-		return false;
-	}
-
-	@Override
-	public boolean interactWith(Lemming receiver, Lemming owner) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

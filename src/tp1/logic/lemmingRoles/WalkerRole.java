@@ -9,12 +9,13 @@ import tp1.view.Messages;
 public class WalkerRole extends AbstractRol implements LemmingRole {
 
 	private static final String NAME = Messages.WALKER_ROL_NAME;
+	private static final String DETAILS = Messages.WALKER_ROL_DETAILS;
 	private static final String HELP = Messages.WALKER_ROL_HELP;
 	private static final String ICON_RIGHT = Messages.LEMMING_RIGHT;
 	private static final String ICON_LEFT = Messages.LEMMING_LEFT;
 	
 	public WalkerRole() {
-		super(NAME);
+		super(NAME, HELP, DETAILS);
 	}
 	
 	public void play(Lemming lemming) {
@@ -71,7 +72,26 @@ public class WalkerRole extends AbstractRol implements LemmingRole {
 		}
 		
 		return false;
-
 	}
-
+	
+	@Override
+	public boolean interactWith(MetalWall metalWall, Lemming owner) {
+		if (owner.getPos().equals(metalWall.getPos())) {
+			if (owner.getDireccion().equals(Direction.RIGHT)) {
+				owner.setDireccion(Direction.LEFT);
+				Position pos = owner.getPos();
+				pos.setCol(pos.getCol() - 1);
+				owner.setPos(pos);
+			}
+			else {
+				owner.setDireccion(Direction.RIGHT);
+				Position pos = owner.getPos();
+				pos.setCol(pos.getCol() + 1);
+				owner.setPos(pos);
+			}
+			return true;
+		}
+		
+		return false;
+	}
 }

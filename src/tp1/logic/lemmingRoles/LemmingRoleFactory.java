@@ -9,8 +9,9 @@ import tp1.control.commands.Command;
 public class LemmingRoleFactory {
 	private static final List<LemmingRole> AVAILABLE_ROLES =
 			Arrays.asList( 
-					new WalkerRole(),
-					new ParachuteRole()
+					new DownCaverRole(),
+					new ParachuteRole(),
+					new WalkerRole()
 			);
 	
 	public static LemmingRole parse(String input) {
@@ -24,5 +25,15 @@ public class LemmingRoleFactory {
 		}
 		
 		return null;
+	}
+	
+	public static String commandHelp() {
+		String ret = "";
+		
+		for (LemmingRole C: AVAILABLE_ROLES) {
+			ret += C.helpText();
+		}
+		
+		return ret;
 	}
 }

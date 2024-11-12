@@ -1,8 +1,10 @@
 package tp1.logic.lemmingRoles;
 
 import tp1.logic.GameItem;
+import tp1.logic.Position;
 import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.Lemming;
+import tp1.logic.gameobjects.MetalWall;
 import tp1.logic.gameobjects.Wall;
 
 public interface LemmingRole {
@@ -14,4 +16,7 @@ public interface LemmingRole {
 	public boolean interactWith(Lemming receiver, Lemming owner);
 	public boolean interactWith(Wall wall, Lemming owner);
 	public boolean interactWith(ExitDoor door, Lemming owner);
+	public boolean interactWith(MetalWall metalWall, Lemming owner);
+	public String helpText();
+	public boolean equals(Object obj);
 }
