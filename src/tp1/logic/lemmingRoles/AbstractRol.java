@@ -39,7 +39,12 @@ public abstract class AbstractRol implements LemmingRole{
 	}
 	public boolean interactWith(ExitDoor door, Lemming owner) {
 		if (owner.getPos().equals(door.getPos())){
-			owner.setWin(true);
+			if (owner.isExit()) {
+				owner.setWin(true);
+			}
+			else {
+				owner.setExit(true);
+			}
 			return true;
 		}
 		

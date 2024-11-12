@@ -7,6 +7,7 @@ import tp1.logic.lemmingRoles.WalkerRole;
 public class Lemming extends GameObject {
 	private boolean estaVivo;
 	private boolean isWin;
+	private boolean exit;
 	private int caida = 0;
 	private boolean enAire;
 	private Direction direccion;
@@ -17,6 +18,7 @@ public class Lemming extends GameObject {
 		this.estaVivo = true;
 		this.enAire = false;
 		this.isWin = false;
+		this.exit = false;
 		this.direccion = Direction.RIGHT;
 		this.role = new WalkerRole();
 	}
@@ -27,13 +29,17 @@ public class Lemming extends GameObject {
 	}
 	
 	public void walkOrFall() { 
-		if (isEnAire()) {
-			caida++;
-			fall();
+		if (!exit) {
+			if (isEnAire()) {
+				caida++;
+				fall();
+			}
+			else {
+				walk();
+			}
 		}
-		else {
-			walk();
-		}
+
+		game.receiveInteractionsFrom(this);
 	}
 	
 	public void walk() {
@@ -59,24 +65,28 @@ public class Lemming extends GameObject {
 		if (!game.collision(pos.getRow()+1, pos.getCol())) {
 			enAire = true;
 		}
-		
-		game.receiveInteractionsFrom(this);
 	}
 	
 	public void fall() {
-		int y = pos.getRow();
-		
-		if (y == 9 || this.caida >= 3 && game.collision(pos.getRow()+1, pos.getCol())) {
-			this.estaVivo = false;
-		}
-		else {
-			pos.setRow(y + 1);
-			if (!game.receiveInteractionsFrom(this) && game.collision(pos.getRow()+1, pos.getCol())){
-				enAire = false;
-				caida = 0;
-				disableRole();
+		if (enAire) {
+			int y = pos.getRow();
+			
+			if (y == 9 || this.caida >= 3 && game.collision(pos.getRow()+1, pos.getCol())) {
+				this.estaVivo = false;
+			}
+			else {
+				pos.setRow(y + 1);
+				if (this.caida < 3 && game.collision(pos.getRow()+1, pos.getCol())){
+					enAire = false;
+					caida = 0;
+					disableRole();
+				}
 			}
 		}
+		else {
+			disableRole();
+			walk();
+;		}
 	}
 	public String toString() {
 		return this.role.getIcon(this);
@@ -129,6 +139,10 @@ public class Lemming extends GameObject {
 		}
 
 		return false;
+	}
+	
+	public void setExit(boolean exit) {
+		this.exit = exit;
 	}
 	
 	// GETTERS
@@ -190,7 +204,6 @@ public class Lemming extends GameObject {
 
 	@Override
 	public boolean isExit() {
-		// TODO Auto-generated method stub
-		return false;
+		return exit;
 	}
 }

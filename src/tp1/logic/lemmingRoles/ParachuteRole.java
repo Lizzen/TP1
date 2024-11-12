@@ -20,7 +20,7 @@ public class ParachuteRole extends AbstractRol implements LemmingRole{
 	@Override
 	public void play(Lemming lemming) {
 		lemming.setCaida(0);
-		lemming.walkOrFall();
+		lemming.fall();
 	}
 
 	@Override
