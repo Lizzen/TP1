@@ -3,9 +3,11 @@ package tp1.logic;
 import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.Lemming;
+import tp1.logic.gameobjects.MetalWall;
 import tp1.view.Messages;
 import tp1.logic.gameobjects.Wall;
 import tp1.logic.lemmingRoles.LemmingRole;
+import tp1.logic.lemmingRoles.ParachuteRole;
 
 public class Game implements GameModel, GameStatus, GameWorld{
 
@@ -21,18 +23,23 @@ public class Game implements GameModel, GameStatus, GameWorld{
 	public Game(int nLevel) {
 		this.nLevel = nLevel;
 		this.gobc = new GameObjectContainer(this);
-		initGame(this.nLevel);
+		if (this.nLevel < 2) {
+			initGame(this.nLevel);
+		}
+		else {
+			initGame2();
+		}
 	}
 
 	public void initGame(int nLevel){
 		//Lemmings
 		this.lemmingsToWin = 2;
-		this.gobc.add(new Lemming(this, 3, 2));
-		this.gobc.add(new Lemming(this, 8, 0));
-		this.gobc.add(new Lemming(this, 0, 9));
+		this.gobc.add(new Lemming(this, 3, 2, null));
+		this.gobc.add(new Lemming(this, 8, 0, null));
+		this.gobc.add(new Lemming(this, 0, 9, null));
 		numLemmingsInBoard += 3;
 		if (nLevel == 1) {
-			this.gobc.add(new Lemming(this, 3, 3));
+			this.gobc.add(new Lemming(this, 3, 3, null));
 			numLemmingsInBoard++;
 		}
 		
@@ -56,6 +63,41 @@ public class Game implements GameModel, GameStatus, GameWorld{
 		this.gobc.add(new ExitDoor(this, 5, 4));
 	}
 	
+	public void initGame2(){
+		//Lemmings
+		this.lemmingsToWin = 2;
+		this.gobc.add(new Lemming(this, 3, 2, null));
+		this.gobc.add(new Lemming(this, 8, 0, null));
+		this.gobc.add(new Lemming(this, 0, 9, null));
+		this.gobc.add(new Lemming(this, 3, 3, null));
+		this.gobc.add(new Lemming(this, 0, 6, null));
+		this.gobc.add(new Lemming(this, 0, 6, new ParachuteRole()));
+		numLemmingsInBoard += 6;
+		
+		//Walls
+		for(int i = 2; i < 5; i++) {
+			this.gobc.add(new Wall(this, 4, i));
+		}
+		for(int i = 8; i < 11; i++) {
+			this.gobc.add(new Wall(this, 1, i));
+			this.gobc.add(new Wall(this, 9, i));
+		}
+		for(int i = 4; i < 8; i++) {
+			this.gobc.add(new Wall(this, 6, i));
+		}
+		this.gobc.add(new Wall(this, 5, 7));
+		this.gobc.add(new Wall(this, 8, 8));
+		this.gobc.add(new Wall(this, 9, 0));
+		this.gobc.add(new Wall(this, 9, 1));
+		this.gobc.add(new Wall(this, 5, 3));
+		
+		//MetalWalls
+		this.gobc.add(new MetalWall(this, 6, 3));
+		
+		//ExitDoor
+		this.gobc.add(new ExitDoor(this, 5, 4));
+	}
+	
 	public void update() {
 		this.cycle++;
 		this.gobc.update();
@@ -64,7 +106,12 @@ public class Game implements GameModel, GameStatus, GameWorld{
 	public void reset() {
 		this.numLemmingsInBoard = 0;
 		this.gobc = new GameObjectContainer(this);
-		initGame(this.nLevel);
+		if (this.nLevel < 2) {
+			initGame(this.nLevel);
+		}
+		else {
+			initGame2();
+		}
 		this.cycle = 0;
 	}
 
@@ -95,7 +142,7 @@ public class Game implements GameModel, GameStatus, GameWorld{
 	}
 	
 	public boolean playerWins() {
-		return numLemmingsExit() >= numLemmingsToWin();
+		return numLemmingsExit() >= numLemmingsToWin() && numLemmingsInBoard() == 0;
 	}
 
 	public boolean playerLooses() {

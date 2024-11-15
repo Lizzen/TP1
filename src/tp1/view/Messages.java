@@ -108,8 +108,7 @@ public class Messages {
 	
 	// SETROLE
 	public static final String COMMAND_SETROLE_NAME = "setRole";
-	public static final String COMMAND_SETROLE_SHORTCUT1 = "s";
-	public static final String COMMAND_SETROLE_SHORTCUT2 = "R";
+	public static final String COMMAND_SETROLE_SHORTCUT = "sr";
 	public static final String COMMAND_SETROLE_DETAILS = "[s]et[R]ole ROLE ROW COL";
 	public static final String COMMAND_SETROLE_HELP = "sets the lemming in position " + "(ROW,COL) to role ROLE";		
 //Roles
@@ -126,7 +125,7 @@ public class Messages {
 	public static final String PARACHUTE_ROL_HELP = "Lemming falls with a parachute";
 	
 	// PARACHUTE
-	public static final String DOWNCAVER_ROL_SYMBOL = "D";
+	public static final String DOWNCAVER_ROL_SYMBOL = "DC";
 	public static final String DOWNCAVER_ROL_NAME = "DownCaver";
 	public static final String DOWNCAVER_ROL_DETAILS = "   [D]own[C]aver";
 	public static final String DOWNCAVER_ROL_HELP = "Lemming caves downwards";

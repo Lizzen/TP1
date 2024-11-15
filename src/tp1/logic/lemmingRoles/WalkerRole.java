@@ -11,11 +11,12 @@ public class WalkerRole extends AbstractRol implements LemmingRole {
 	private static final String NAME = Messages.WALKER_ROL_NAME;
 	private static final String DETAILS = Messages.WALKER_ROL_DETAILS;
 	private static final String HELP = Messages.WALKER_ROL_HELP;
+	private static final String SHORTCUT = Messages.WALKER_ROL_SYMBOL;
 	private static final String ICON_RIGHT = Messages.LEMMING_RIGHT;
 	private static final String ICON_LEFT = Messages.LEMMING_LEFT;
 	
 	public WalkerRole() {
-		super(NAME, HELP, DETAILS);
+		super(NAME, HELP, DETAILS, SHORTCUT);
 	}
 	
 	public void play(Lemming lemming) {

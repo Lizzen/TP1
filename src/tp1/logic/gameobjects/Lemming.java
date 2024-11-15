@@ -2,6 +2,7 @@ package tp1.logic.gameobjects;
 
 import tp1.logic.*;
 import tp1.logic.lemmingRoles.LemmingRole;
+import tp1.logic.lemmingRoles.LemmingRoleFactory;
 import tp1.logic.lemmingRoles.WalkerRole;
 
 public class Lemming extends GameObject {
@@ -12,13 +13,18 @@ public class Lemming extends GameObject {
 	private Direction direccion;
 	private LemmingRole role;
 	
-	public Lemming(Game game, int x, int y) {
+	public Lemming(Game game, int x, int y, LemmingRole role) {
 		super(game, x, y);
 		this.enAire = false;
 		this.isWin = false;
 		this.exit = false;
 		this.direccion = Direction.RIGHT;
-		this.role = new WalkerRole();
+		if (role == null) {
+			this.role = new WalkerRole();
+		}
+		else {
+			this.role = role;
+		}
 	}
 	
 	@Override
@@ -28,11 +34,15 @@ public class Lemming extends GameObject {
 	
 	public void walkOrFall() { 
 		if (!exit) {
+			if (!game.collision(pos.getRow() + 1, pos.getCol())) {
+				enAire = true;
+			}
 			if (isEnAire()) {
 				caida++;
 				fall();
 			}
 			else {
+				disableRole();
 				walk();
 			}
 		}
@@ -59,39 +69,29 @@ public class Lemming extends GameObject {
 				pos.setCol(x - 1);
 			}
 		}
-		
-		if (!game.collision(pos.getRow()+1, pos.getCol())) {
-			enAire = true;
-		}
 	}
 	
 	public void fall() {
-		if (enAire) {
-			int y = pos.getRow();
-			
-			if (y == 9 || this.caida >= 3 && game.collision(pos.getRow()+1, pos.getCol())) {
-				this.alive = false;
-			}
-			else {
-				pos.setRow(y + 1);
-				if (this.caida < 3 && game.collision(pos.getRow()+1, pos.getCol())){
-					enAire = false;
-					caida = 0;
-				}
-			}
+		int y = pos.getRow();
+		
+		if (y == 9 || this.caida >= 3 && game.collision(pos.getRow()+1, pos.getCol())) {
+			this.alive = false;
 		}
 		else {
-			disableRole();
-			walk();
-;		}
+			pos.setRow(y + 1);
+			if (this.caida < 3 && game.collision(pos.getRow()+1, pos.getCol())){
+				enAire = false;
+				caida = 0;
+			}
+		}
 	}
 	
 	public void cave() {
 		int y = pos.getRow() + 1;
 		pos.setRow(y);
 		if (!game.receiveInteractionsFrom(this)){
-			caida++;
 			enAire = true;
+			caida++;
 			disableRole();
 		}
 	}

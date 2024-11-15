@@ -9,15 +9,14 @@ import tp1.view.Messages;
 
 public class SetRoleCommand extends Command{
 	private static final String NAME = Messages.COMMAND_SETROLE_NAME;
-	private static final String SHORTCUT1 = Messages.COMMAND_SETROLE_SHORTCUT1;
-	private static final String SHORTCUT2 = Messages.COMMAND_SETROLE_SHORTCUT2;
+	private static final String SHORTCUT = Messages.COMMAND_SETROLE_SHORTCUT;
 	private static final String DETAILS =  Messages.COMMAND_SETROLE_DETAILS;
 	private static final String HELP =  Messages.COMMAND_SETROLE_HELP;
 	private Position pos;
 	private LemmingRole role;
 
 	public SetRoleCommand() {
-		super(NAME, SHORTCUT1, DETAILS, HELP);
+		super(NAME, SHORTCUT, DETAILS, HELP);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -34,17 +33,13 @@ public class SetRoleCommand extends Command{
 		return false;
 	}
 	
-	protected boolean dentroRango(int x, int y) {
-		return x < 10 && x >=0 && y < 10 && y >= 0;
-	}
-
 	@Override
 	public Command parse(String[] words) {
 		if(matchCommandName(words[0]) && words.length < 5) {
-			int x =  words[2].charAt(0) - 'A';
+			int x = Character.toUpperCase(words[2].charAt(0)) - 'A';
 			int y = Integer.parseInt(words[3]) - 1;
 			role = LemmingRoleFactory.parse(words[1]);
-			if (role != null && dentroRango(x, y)) {
+			if (role != null) {
 				this.pos = new Position(x, y);
 				return this;
 			}

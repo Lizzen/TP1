@@ -1,7 +1,6 @@
 package tp1.logic.lemmingRoles;
 
 import tp1.logic.GameItem;
-import tp1.logic.Position;
 import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.Lemming;
 import tp1.logic.gameobjects.MetalWall;
@@ -10,17 +9,19 @@ import tp1.view.Messages;
 
 public abstract class AbstractRol implements LemmingRole{
 	private final String NAME;
+	private final String SHORTCUT;
 	private final String HELP;
 	private final String DETAILS;
 	
-	public AbstractRol(String name, String help, String details) {
+	public AbstractRol(String name, String help, String details, String shortcut) {
 		NAME = name;
 		HELP = help;
 		DETAILS = details;
+		SHORTCUT = shortcut;	
 	}
 	
 	protected boolean matchRolName(String name) {
-		return getName().equalsIgnoreCase(name);
+		return getName().equalsIgnoreCase(name) || getShortcut().equalsIgnoreCase(name);
 	}
 	
 	public String getName() {
@@ -33,6 +34,10 @@ public abstract class AbstractRol implements LemmingRole{
 	
 	public String getDetails() {
 		return DETAILS;
+	}
+	
+	public String getShortcut() {
+		return SHORTCUT;
 	}
 	
 	public String helpText() {

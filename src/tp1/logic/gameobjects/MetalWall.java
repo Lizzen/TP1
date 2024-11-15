@@ -48,16 +48,4 @@ public class MetalWall extends GameObject {
 	public boolean isSolid() {
 		return true;
 	}
-
-	@Override
-	public boolean isAlive() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isExit() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }

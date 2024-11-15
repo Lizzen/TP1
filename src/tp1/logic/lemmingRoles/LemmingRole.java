@@ -1,7 +1,6 @@
 package tp1.logic.lemmingRoles;
 
 import tp1.logic.GameItem;
-import tp1.logic.Position;
 import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.Lemming;
 import tp1.logic.gameobjects.MetalWall;

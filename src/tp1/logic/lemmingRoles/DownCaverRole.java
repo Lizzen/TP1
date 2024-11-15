@@ -11,10 +11,11 @@ public class DownCaverRole extends AbstractRol implements LemmingRole {
 	private static final String NAME = Messages.DOWNCAVER_ROL_NAME;
 	private static final String DETAILS = Messages.DOWNCAVER_ROL_DETAILS;
 	private static final String HELP = Messages.DOWNCAVER_ROL_HELP;
+	private static final String SHORTCUT = Messages.DOWNCAVER_ROL_SYMBOL;
 	private static final String ICON = Messages.LEMMING_DOWN_CAVER;
 	
 	public DownCaverRole() {
-		super(NAME, HELP, DETAILS);
+		super(NAME, HELP, DETAILS, SHORTCUT);
 	}
 	
 	public void play(Lemming lemming) {
@@ -62,6 +63,7 @@ public class DownCaverRole extends AbstractRol implements LemmingRole {
 		if (owner.getPos().equals(metalWall.getPos())) {
 			owner.getPos().setRow(owner.getPos().getRow() - 1);
 			owner.disableRole();
+			owner.walkOrFall();
 			return true;
 		}
 		return false;
