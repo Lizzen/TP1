@@ -3,6 +3,7 @@ package tp1.logic;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import tp1.exceptions.OffBoardException;
 import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.Lemming;
@@ -55,13 +56,18 @@ public class GameObjectContainer {
 		return ret;
 	}
 	
-	public boolean setRole(LemmingRole rol, Position posicion) {
-		for(GameObject GO: this.objects) {
-			if(GO.isInPosition(posicion) && GO.setRole(rol))
-				return true;
+	public boolean setRole(LemmingRole rol, Position posicion) throws OffBoardException {
+		if (posicion.getRow() >= 0 && posicion.getRow() < 10 && posicion.getCol() >= 0 && posicion.getCol() < 10) {
+			for(GameObject GO: this.objects) {
+				if(GO.isInPosition(posicion) && GO.setRole(rol))
+					return true;
+			}
+			
+			throw new OffBoardException("No lemming in position" + Messages.POSITION.formatted(posicion.getRow(), posicion.getCol()) + "admits role");
 		}
-
-		return false;
+		else {
+			throw new OffBoardException("Position" + Messages.POSITION.formatted(posicion.getRow(), posicion.getCol()) + "off the board");
+		}
 	}
 	
 	public int numLemmingsExit() {

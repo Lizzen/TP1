@@ -1,5 +1,6 @@
 package tp1.control.commands;
 
+import tp1.exceptions.CommandParseException;
 import tp1.logic.GameModel;
 import tp1.logic.Position;
 import tp1.logic.lemmingRoles.LemmingRole;
@@ -34,14 +35,21 @@ public class SetRoleCommand extends Command{
 	}
 	
 	@Override
-	public Command parse(String[] words) {
+	public Command parse(String[] words) throws CommandParseException {
 		if(matchCommandName(words[0]) && words.length < 5) {
-			int x = Character.toUpperCase(words[2].charAt(0)) - 'A';
-			int y = Integer.parseInt(words[3]) - 1;
-			role = LemmingRoleFactory.parse(words[1]);
-			if (role != null) {
-				this.pos = new Position(x, y);
-				return this;
+			try {
+				int x = Character.toUpperCase(words[2].charAt(0)) - 'A';
+				int y = Integer.parseInt(words[3]) - 1;
+				
+				
+				role = LemmingRoleFactory.parse(words[1]);
+				if (role != null) {
+					this.pos = new Position(x, y);
+					return this;
+				}
+			} catch (NumberFormatException e) {
+			 	throw new CommandParseException(Messages.INVALID_POSITION.formatted
+			 	 		(Messages.POSITION.formatted(words[2], words[3])));
 			}
 		} 
 		return null;

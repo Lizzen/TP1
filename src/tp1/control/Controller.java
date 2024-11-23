@@ -1,9 +1,10 @@
 package tp1.control;
 
-import java.util.Scanner;
 
 import tp1.control.commands.Command;
 import tp1.control.commands.CommandGenerator;
+import tp1.exceptions.CommandException;
+import tp1.exceptions.CommandParseException;
 import tp1.logic.Game;
 import tp1.logic.GameModel;
 import tp1.view.GameView;
@@ -33,13 +34,23 @@ public class Controller {
 		String[] words;
 		while (!game.isFinished()) {
 			words = view.getPrompt();
-			Command command = CommandGenerator.parse(words);
-			if (command != null) {
-				command.execute(game,view);
+			Command command = null;
+			try {
+				command = CommandGenerator.parse(words);
+				if (command != null) {
+					command.execute(game,view);
+				}
+				else {
+					view.showError(Messages.UNKNOWN_COMMAND.formatted(words[0]));
+				}
+			} catch (CommandException e) {
+				view.showError(e.getMessage());
+	 			Throwable cause = e.getCause();
+	 			if (cause != null) 
+	 			    view.showError(cause.getMessage());
 			}
-			else {
-				view.showError(Messages.UNKNOWN_COMMAND.formatted(words[0]));
-			}
+
+			
 		}
 
 		view.showEndMessage();

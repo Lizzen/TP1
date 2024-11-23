@@ -1,5 +1,7 @@
 package tp1.control.commands;
 
+import tp1.exceptions.CommandExecuteException;
+import tp1.exceptions.CommandParseException;
 import tp1.logic.GameModel;
 import tp1.view.GameView;
 import tp1.view.Messages;
@@ -17,9 +19,9 @@ public abstract class Command {
 		HELP = help;
 	}
 	
-	public abstract boolean execute (GameModel game, GameView view);
+	public abstract boolean execute (GameModel game, GameView view) throws CommandExecuteException;
 
-	public abstract Command parse(String[] words);
+	public abstract Command parse(String[] words) throws CommandParseException;
 	
 	protected boolean matchCommandName(String name) {
 		return getShortcut().equalsIgnoreCase(name) 
