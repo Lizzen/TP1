@@ -37,6 +37,7 @@ public class Lemming extends GameObject {
 			if (!game.collision(pos.getRow() + 1, pos.getCol())) {
 				enAire = true;
 			}
+			
 			if (isEnAire()) {
 				caida++;
 				fall();

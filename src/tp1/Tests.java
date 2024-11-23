@@ -82,7 +82,7 @@ public class Tests {
 				          Paths.get(DIR + FILE_PREFIXES[n] + "_output.txt"),
 				new String[] { mapa, "NO_COLORS" });
 	}
-	/*
+	
 	@Test
 	public void test00() { 	testN(0); }
 	@Test
@@ -93,7 +93,6 @@ public class Tests {
 	public void test03() { 	testN(3); }
 	@Test
 	public void test04() { 	testN(4); }
-	*/
 	@Test
 	public void test05() { 	testN(5); }
 
