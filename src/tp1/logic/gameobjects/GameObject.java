@@ -1,6 +1,5 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.Game;
 import tp1.logic.GameItem;
 import tp1.logic.GameWorld;
 import tp1.logic.Position;
@@ -11,14 +10,20 @@ public abstract class GameObject implements GameItem{
     protected Position pos;
 	protected GameWorld game;
 	protected boolean alive;
+	protected String name;
+	protected String shortcut;
 	
-	public GameObject(Game game, int row, int col) {
-		this.game = game;
-		this.pos = new Position(row, col);
-		this.alive = true;
+	public GameObject(String name, String shortcut) {
+		this.name = name;
+		this.shortcut = shortcut;
+		//this.alive = true;
 	}
 	public void update() {
 		return ;
+	}
+	
+	public void setPosition(Position pos) {
+		this.pos = pos;
 	}
 	
 	public boolean isInPosition(Position pos) {
@@ -48,7 +53,40 @@ public abstract class GameObject implements GameItem{
 		return false;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public String getShortcut() {
+		return shortcut;
+	}
 	
+	protected boolean matchRolName(String name) {
+		return getName().equalsIgnoreCase(name) || getShortcut().equalsIgnoreCase(name);
+	}
+	
+	public void setIniDirection(String input) {
+		return;
+	}
+	
+	public void setCaida(int caida) {
+		return;
+	}
+	
+	public GameObject parse(String line, GameWorld game) {
+		if (matchRolName(line)) {
+			this.game = game;
+			return this;
+		}
+		
+		return null;
+	}
+	
+	/*private static Position getPositionFrom(String line) throws ObjectParseException, OffBoardException {...}
+	private static String getObjectNameFrom(String line) throws ObjectParseException {...}
+	private static Direction getLemmingDirectionFrom(String line) throws ObjectParseException {...}
+	private static int getLemmingHeigthFrom(String line) throws ObjectParseException {...}
+	private static LemmingRole getLemmingRoleFrom(String line) throws ObjectParseException {...}*/
 	
 	@Override
 	public boolean interactWith(Lemming lemming) { return false; }

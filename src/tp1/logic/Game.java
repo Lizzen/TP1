@@ -1,5 +1,6 @@
 package tp1.logic;
 
+import tp1.exceptions.OffBoardException;
 import tp1.logic.gameobjects.ExitDoor;
 import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.Lemming;
@@ -165,7 +166,7 @@ public class Game implements GameModel, GameStatus, GameWorld{
 		this.exit = exit;
 	}
 	
-	public boolean setRole(LemmingRole rol, Position pos) {
+	public boolean setRole(LemmingRole rol, Position pos) throws OffBoardException {
 		return this.gobc.setRole(rol, pos);
 	}
 

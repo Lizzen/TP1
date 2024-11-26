@@ -1,12 +1,12 @@
 package tp1.logic.gameobjects;
 
-import tp1.exceptions.OffBoardException;
 import tp1.logic.*;
 import tp1.logic.lemmingRoles.LemmingRole;
-import tp1.logic.lemmingRoles.LemmingRoleFactory;
 import tp1.logic.lemmingRoles.WalkerRole;
 
 public class Lemming extends GameObject {
+	private static final String NAME = "Lemming";
+	private static final String SHORTCUT = "L";
 	private boolean isWin;
 	private boolean exit;
 	private int caida = 0;
@@ -14,18 +14,13 @@ public class Lemming extends GameObject {
 	private Direction direccion;
 	private LemmingRole role;
 	
-	public Lemming(Game game, int x, int y, LemmingRole role) {
-		super(game, x, y);
+	public Lemming() {
+		super(NAME, SHORTCUT);
 		this.enAire = false;
 		this.isWin = false;
 		this.exit = false;
 		this.direccion = Direction.RIGHT;
-		if (role == null) {
-			this.role = new WalkerRole();
-		}
-		else {
-			this.role = role;
-		}
+		this.role = new WalkerRole();
 	}
 	
 	@Override
@@ -149,6 +144,15 @@ public class Lemming extends GameObject {
 	
 	public void setExit(boolean exit) {
 		this.exit = exit;
+	}
+	
+	public void setIniDirection(String input) {
+		if (input.equalsIgnoreCase("right")) {
+			this.direccion = Direction.RIGHT;
+		}
+		else {
+			this.direccion = Direction.LEFT;
+		}
 	}
 	
 	// GETTERS

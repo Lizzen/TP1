@@ -1,14 +1,15 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.Game;
 import tp1.logic.GameItem;
 import tp1.logic.Position;
 import tp1.view.Messages;
 
 public class MetalWall extends GameObject {
+	private static final String NAME = "MetalWall";
+	private static final String SHORTCUT = "MW";
 	
-	public MetalWall(Game game, int row, int col) {
-		super(game, row, col);
+	public MetalWall() {
+		super(NAME, SHORTCUT);
 	}
 	
 	public Position getPos() {
@@ -18,7 +19,13 @@ public class MetalWall extends GameObject {
 		this.pos = pos;
 	}
 
+	public String getNAME() {
+		return NAME;
+	}
 
+	public String getSHORTCUT() {
+		return SHORTCUT;
+	}
 
 	@Override
 	public boolean isWin() {

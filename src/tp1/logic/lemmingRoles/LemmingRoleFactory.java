@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import tp1.control.commands.Command;
+import tp1.exceptions.RoleParseException;
 
 
 public class LemmingRoleFactory {
@@ -14,7 +15,7 @@ public class LemmingRoleFactory {
 					new WalkerRole()
 			);
 	
-	public static LemmingRole parse(String input) {
+	public static LemmingRole parse(String input) throws RoleParseException{
 		LemmingRole ret = null;
 		
 		for (LemmingRole LR: AVAILABLE_ROLES) {
@@ -24,7 +25,7 @@ public class LemmingRoleFactory {
 			}
 		}
 		
-		return null;
+		throw new RoleParseException("Invalid lemming role: ");
 	}
 	
 	public static String commandHelp() {

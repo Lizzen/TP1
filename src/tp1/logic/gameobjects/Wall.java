@@ -1,14 +1,15 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.Game;
 import tp1.logic.GameItem;
 import tp1.logic.Position;
 import tp1.view.Messages;
 
 public class Wall extends GameObject {
+	private static final String NAME = "Wall";
+	private static final String SHORTCUT = "W";
 	
-	public Wall(Game game, int row, int col) {
-		super(game, row, col);
+	public Wall() {
+		super(NAME, SHORTCUT);
 	}
 	
 	public Position getPos() {
@@ -16,6 +17,14 @@ public class Wall extends GameObject {
 	}
 	public void setPos(Position pos) {
 		this.pos = pos;
+	}
+	
+	public String getNAME() {
+		return NAME;
+	}
+
+	public String getSHORTCUT() {
+		return SHORTCUT;
 	}
 
 	@Override

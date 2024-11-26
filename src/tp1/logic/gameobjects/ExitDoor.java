@@ -1,18 +1,27 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.Game;
 import tp1.logic.GameItem;
 import tp1.logic.Position;
 import tp1.view.Messages;
 
 public class ExitDoor extends GameObject {
+	private static final String NAME = "ExitDoor";
+	private static final String SHORTCUT = "ED";
 	
-	public ExitDoor(Game game, int x, int y) {
-		super(game, x, y);
+	public ExitDoor() {
+		super(NAME, SHORTCUT);
 	}
 
 	public Position getPos() {
 		return pos;
+	}
+	
+	public String getNAME() {
+		return NAME;
+	}
+
+	public String getSHORTCUT() {
+		return SHORTCUT;
 	}
 
 	@Override

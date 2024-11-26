@@ -1,6 +1,9 @@
 package tp1.control.commands;
 
+import tp1.exceptions.CommandExecuteException;
 import tp1.exceptions.CommandParseException;
+import tp1.exceptions.OffBoardException;
+import tp1.exceptions.RoleParseException;
 import tp1.logic.GameModel;
 import tp1.logic.Position;
 import tp1.logic.lemmingRoles.LemmingRole;
@@ -22,13 +25,17 @@ public class SetRoleCommand extends Command{
 	}
 
 	@Override
-	public boolean execute(GameModel game, GameView view) {
-		if (game.setRole(role, pos)) {
-			game.update();
-			view.showGame();
-		}
-		else {
-			view.showError("SetRoleCommand error (Incorrect position or no object in that position admits that role)");
+	public boolean execute(GameModel game, GameView view) throws CommandExecuteException {
+		try {
+			if (game.setRole(role, pos)) {
+				game.update();
+				view.showGame();
+			}
+			else {
+				view.showError("SetRoleCommand error (Incorrect position or no object in that position admits that role)");
+			}
+		} catch (OffBoardException obe) {
+			throw new CommandExecuteException(Messages.ERROR_COMMAND_EXECUTE, obe);
 		}
 
 		return false;
@@ -42,11 +49,17 @@ public class SetRoleCommand extends Command{
 				int y = Integer.parseInt(words[3]) - 1;
 				
 				
-				role = LemmingRoleFactory.parse(words[1]);
+				try {
+					role = LemmingRoleFactory.parse(words[1]);
+				} catch (RoleParseException e) {
+					throw new CommandParseException(e.toString());
+				}
+				
 				if (role != null) {
 					this.pos = new Position(x, y);
 					return this;
 				}
+				
 			} catch (NumberFormatException e) {
 			 	throw new CommandParseException(Messages.INVALID_POSITION.formatted
 			 	 		(Messages.POSITION.formatted(words[2], words[3])));

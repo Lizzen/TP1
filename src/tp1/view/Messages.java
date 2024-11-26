@@ -139,4 +139,7 @@ public class Messages {
 	public static final String LEMMING_LEFT = "ᗺ";
 	public static final String LEMMING_PARACHUTE = "🪂";
 	public static final String LEMMING_DOWN_CAVER = "´･ω･`";
+	
+	// Excepciones
+	public static final String ERROR_COMMAND_EXECUTE = "Command execute problem";
 }
