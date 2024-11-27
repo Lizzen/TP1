@@ -27,6 +27,7 @@ public class Lemming extends GameObject {
 	public void update() {
 		this.role.play(this);
 	}
+
 	
 	public void walkOrFall() { 
 		if (!exit) {
@@ -201,4 +202,5 @@ public class Lemming extends GameObject {
 	public boolean isExit() {
 		return exit;
 	}
+
 }

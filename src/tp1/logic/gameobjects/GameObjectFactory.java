@@ -23,7 +23,7 @@ public class GameObjectFactory {
 
 	public static GameObject parse(String input, GameWorld game) throws ObjectParseException, OffBoardException{
 		GameObject ret = null;
-		String[] line = input.split(" ");
+		String[] line = input.trim().split("\\s+");;
 		for (GameObject GO: AVAILABLE_OBJ) {
 			ret = GO.parse(line[1], game);
 			if (ret != null) {
@@ -36,6 +36,12 @@ public class GameObjectFactory {
 				}
 				
 				if (line.length > 2) {
+					if(line[2].equalsIgnoreCase("Right")||line[2].equalsIgnoreCase("Left")) {
+						ret.setIniDirection(line[2]);
+					}
+					else {
+						throw new ObjectParseException("Direccion incorrecta"+ input);
+					}
 					ret.setIniDirection(line[2]);
 					ret.setCaida(Integer.parseInt(line[3]));
 					try {
