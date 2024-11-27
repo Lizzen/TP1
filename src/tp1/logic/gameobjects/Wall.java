@@ -1,18 +1,20 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
+import tp1.logic.GameItem;
 import tp1.logic.Position;
+import tp1.view.Messages;
 
-public class Wall {
-
-	private Position pos;
-	private Game game;
+public class Wall extends GameObject {
+	private static final String NAME = "Wall";
+	private static final String SHORTCUT = "W";
 	
 	public Wall(Game game, int row, int col) {
-		this.pos = new Position();
-		this.pos.setCol(col);
-		this.pos.setRow(row);
-		this.game = game;
+		super(game, row, col);
+	}
+	
+	public Wall() {
+		super(NAME, SHORTCUT);
 	}
 	
 	public Position getPos() {
@@ -22,7 +24,40 @@ public class Wall {
 		this.pos = pos;
 	}
 	
-	public boolean isInPosition(int x, int y) {
-		return this.pos.getRow() == x && this.pos.getCol() == y;
+	public String getNAME() {
+		return NAME;
+	}
+
+	public String getSHORTCUT() {
+		return SHORTCUT;
+	}
+
+	@Override
+	public boolean isWin() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public boolean isSolid() {
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return Messages.WALL;
+	}
+
+	@Override
+	public boolean collision(int x, int y) {
+		/*if (isInPosition(x, y)) {
+			return true;
+		}*/
+		return false;
+	}
+
+	@Override
+	public boolean receiveInteraction(GameItem other) {
+		return other.interactWith(this);
 	}
 }

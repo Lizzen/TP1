@@ -5,22 +5,25 @@ import tp1.logic.GameItem;
 import tp1.logic.Position;
 import tp1.view.Messages;
 
-public class ExitDoor extends GameObject {
-	private static final String NAME = "ExitDoor";
-	private static final String SHORTCUT = "ED";
+public class MetalWall extends GameObject {
+	private static final String NAME = "MetalWall";
+	private static final String SHORTCUT = "MW";
 	
-	public ExitDoor(Game game, int x, int y) {
-		super(game, x, y);
+	public MetalWall(Game game, int row, int col) {
+		super(game, row, col);
 	}
 	
-	public ExitDoor() {
+	public MetalWall() {
 		super(NAME, SHORTCUT);
 	}
-
-	public Position getPos() {
-		return pos;
-	}
 	
+	public Position getPos() {
+		return this.pos;
+	}
+	public void setPos(Position pos) {
+		this.pos = pos;
+	}
+
 	public String getNAME() {
 		return NAME;
 	}
@@ -34,15 +37,17 @@ public class ExitDoor extends GameObject {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
 	@Override
 	public String toString() {
-		return Messages.EXIT_DOOR;
+		return Messages.METALWALL;
 	}
 
 	@Override
 	public boolean collision(int x, int y) {
-		// TODO Auto-generated method stub
+		/*if (isInPosition(x, y)) {
+			return true;
+		}*/
 		return false;
 	}
 
@@ -52,19 +57,7 @@ public class ExitDoor extends GameObject {
 	}
 
 	@Override
-	public boolean interactWith(Lemming lemming) {
-		return false;
-	}
-
-	@Override
-	public boolean interactWith(Wall wall) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean interactWith(ExitDoor door) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isSolid() {
+		return true;
 	}
 }

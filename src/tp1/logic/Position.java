@@ -7,8 +7,19 @@ package tp1.logic;
  */
 public class Position {
 
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		Position p = (Position) obj;
+		return (this.col==p.col && this.row==p.row);
+	}
 	private int col;
 	private int row;
+	
+	public Position (int x, int y) {
+		this.row = x;
+		this.col = y;
+	}
 	public int getCol() {
 		return col;
 	}

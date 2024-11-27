@@ -1,77 +1,109 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.*;
+import tp1.logic.lemmingRoles.LemmingRole;
 import tp1.logic.lemmingRoles.WalkerRole;
-import tp1.view.Messages;
 
-public class Lemming {
-
-	private Position pos;
-	private boolean estaVivo;
+public class Lemming extends GameObject {
+	private static final String NAME = "Lemming";
+	private static final String SHORTCUT = "L";
 	private boolean isWin;
-	private int caida;
+	private boolean exit;
+	private int caida = 0;
 	private boolean enAire;
 	private Direction direccion;
-	private Game game;
-	private WalkerRole role;
+	private LemmingRole role;
 	
-	public Lemming(Game game, int x, int y) {
-		this.game = game;
-		this.pos = new Position();
-		this.pos.setRow(x);
-		this.pos.setCol(y);
-		this.game = game;
-		this.estaVivo = true;
+	public Lemming(Game game, int x, int y, LemmingRole role) {
+		super(game, x, y);
 		this.enAire = false;
 		this.isWin = false;
+		this.exit = false;
 		this.direccion = Direction.RIGHT;
-		this.role = new WalkerRole(game);
+		if (role == null) {
+			this.role = new WalkerRole();
+		}
+		else {
+			this.role = role;
+		}
 	}
 	
+	public Lemming() {
+		super(NAME, SHORTCUT);
+		this.enAire = false;
+		this.isWin = false;
+		this.exit = false;
+		this.direccion = Direction.RIGHT;
+		this.role = new WalkerRole();
+	}
 	
+	@Override
 	public void update() {
 		this.role.play(this);
 	}
 	
-	public void walkOrFall() {
-		// Si entra a la puerta
-		if (this.game.doorCollision(getPos().getRow(), getPos().getCol()) && getCaida() < 4) {
-			setWin(true);
-		}
-		// Si está en el aire
-		else if(getEstaVivo() == true && !this.game.collision(getPos().getRow() +1, getPos().getCol())) {
-			getPos().setRow(getPos().getRow() + 1);
-			if (getPos().getRow() == 10) {
-				setEstaVivo(false);
+	public void walkOrFall() { 
+		if (!exit) {
+			if (!game.collision(pos.getRow() + 1, pos.getCol())) {
+				enAire = true;
 			}
+			
 			if (isEnAire()) {
-				setCaida(getCaida() + 1);
+				caida++;
+				fall();
 			}
 			else {
-				setEnAire(true);
+				disableRole();
+				walk();
 			}
 		}
-		// Si muere por caida
-		else if (getCaida() > 2) {
-			setEstaVivo(false);
+
+		game.receiveInteractionsFrom(this);
+	}
+	
+	public void walk() {
+		int x = pos.getCol();
+		
+		if (this.direccion.equals(Direction.RIGHT)) {
+			if (x == 9) {
+				this.direccion = Direction.LEFT;
+			}
+			else {
+				pos.setCol(x + 1);
+			}
 		}
-		// Cambio de direccion a izquierda
-		else if ((getPos().getCol() + 1 == 10 || this.game.collision(getPos().getRow(), getPos().getCol() + 1)) && getDireccion() == Direction.RIGHT) {
-			setDireccion(Direction.LEFT);
-		}
-		// Cambio de direccion a derecha
-		else if ((getPos().getCol() - 1 == -1 || this.game.collision(getPos().getRow(), getPos().getCol() - 1)) && getDireccion() == Direction.LEFT) {
-			setDireccion(Direction.RIGHT);
-		}
-		// Caminar hacia la izquierda
-		else if (getDireccion().equals(Direction.LEFT)) {
-			getPos().setCol(getPos().getCol() - 1);
-			setCaida(0);
-		}
-		// Caminar hacia la derecha
 		else {
-			getPos().setCol(getPos().getCol() + 1);
-			setCaida(0);
+			if (x == 0) {
+				this.direccion = Direction.RIGHT;
+			}
+			else {
+				pos.setCol(x - 1);
+			}
+		}
+	}
+	
+	public void fall() {
+		int y = pos.getRow();
+		
+		if (y == 9 || this.caida >= 3 && game.collision(pos.getRow()+1, pos.getCol())) {
+			this.alive = false;
+		}
+		else {
+			pos.setRow(y + 1);
+			if (this.caida < 3 && game.collision(pos.getRow()+1, pos.getCol())){
+				enAire = false;
+				caida = 0;
+			}
+		}
+	}
+	
+	public void cave() {
+		int y = pos.getRow() + 1;
+		pos.setRow(y);
+		if (!game.receiveInteractionsFrom(this)){
+			enAire = true;
+			caida++;
+			disableRole();
 		}
 	}
 	
@@ -79,15 +111,18 @@ public class Lemming {
 		return this.role.getIcon(this);
 	}
 	
-	public boolean isEstaVivo() {
-		return estaVivo;
-	}
-
-
-	public void setEstaVivo(boolean estaVivo) {
-		this.estaVivo = estaVivo;
+	@Override
+	public boolean collision(int x, int y) {
+		
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
+	public void disableRole() {
+		this.role = new WalkerRole();
+	}
+
+	// SETTERS	
 	public boolean isEnAire() {
 		return enAire;
 	}
@@ -95,53 +130,89 @@ public class Lemming {
 	public void setEnAire(boolean enAire) {
 		this.enAire = enAire;
 	}
-
-	public boolean getEstaVivo() {
-		return this.estaVivo;
-	}
-
-	public int getCaida() {
-		return caida;
-	}
-
-
+	
 	public void setCaida(int caida) {
 		this.caida = caida;
 	}
 	
-	public boolean isInPosition(int x, int y) {
-		return this.pos.getRow() == x && this.pos.getCol() == y;
+	public void setPos(Position pos) {
+		this.pos = pos;
+	}
+	
+	public void setDireccion(Direction direccion) {
+		this.direccion = direccion;
+	}
+	
+	public void setWin(boolean win) {
+		this.isWin =  win;
+	}
+	
+	public boolean setRole(LemmingRole role) {
+		if (!this.role.equals(role)) {
+			this.role = role;
+			return true;
+		}
+
+		return false;
+	}
+	
+	public void setExit(boolean exit) {
+		this.exit = exit;
+	}
+	
+	public void setIniDirection(String input) {
+		if (input.equalsIgnoreCase("right")) {
+			this.direccion = Direction.RIGHT;
+		}
+		else {
+			this.direccion = Direction.LEFT;
+		}
+	}
+	
+	// GETTERS
+	public int getCaida() {
+		return caida;
 	}
 
 	public Position getPos() {
-		return this.pos;
-	}
-
-	public void setPos(Position pos) {
-		this.pos = pos;
+		return pos;
 	}
 
 	public Direction getDireccion() {
 		return direccion;
 	}
-
-	public void setDireccion(Direction direccion) {
-		this.direccion = direccion;
+	
+	public LemmingRole getRole() {
+		return role;
 	}
 
-	public WalkerRole getRole() {
-		return this.role;
-	}
-
-	public void setRole(WalkerRole role) {
-		this.role = role;
-	}
-
+	//BOOLEANS
 	public boolean isWin() {
 		return this.isWin;
 	}
+	
+	@Override
+	public boolean receiveInteraction(GameItem other) {
+		return other.interactWith(this);
+	}
 
-	public void setWin(boolean win) {
-		this.isWin =  win;
+	@Override
+	public boolean interactWith(Wall wall) {
+		return role.interactWith(wall, this);
+	}
+
+	@Override
+	public boolean interactWith(ExitDoor door) {
+		return role.interactWith(door, this);
+	}
+	
+	@Override
+	public boolean interactWith(MetalWall metalWall) {
+		return role.interactWith(metalWall, this);
+	}
+
+	@Override
+	public boolean isExit() {
+		return exit;
 	}
 }
