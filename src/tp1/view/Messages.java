@@ -53,6 +53,7 @@ public class Messages {
 	// Errores de commandos:
 	public static final String COMMAND_PARAMETERS_MISSING = "Missing parameters";
 	public static final String COMMAND_INCORRECT_PARAMETER_NUMBER = "Incorrect parameter number";
+	public static final String ERROR_INVALID_COMMAND_PARAMETERS ="Invalid command parameters";
 	// Errores de ficheros:
 	public static final String FILE_NOT_FOUND = "File not found: \"%s\"";
 	public static final String READ_ERROR = "Undetermined error reading file \"%s\"";
@@ -71,7 +72,6 @@ public class Messages {
 	public static final String ERROR_OBJECTS_POS = "Invalid object position: \"%s\"";
 	public static final String ERROR_LEMMINGS_DIR = "Invalid lemming direction: \"%s\"";
 	public static final String ERROR_INVALID_FILE = "Invalid file \"%s\" configuration";
-	
 	public static final String HELP_AVAILABLE_COMMANDS = "Available commands:";
 	public static final String COMMAND_HELP_TEXT = "%s: %s";
 

@@ -55,7 +55,7 @@ public class SetRoleCommand extends Command{
 				try {
 					role = LemmingRoleFactory.parse(words[1]);
 				} catch (RoleParseException e) {
-					throw new CommandParseException(e.toString());
+					throw new CommandParseException(e.getMessage());
 				}
 				
 				if (role != null) {
@@ -67,7 +67,11 @@ public class SetRoleCommand extends Command{
 			 	throw new CommandParseException(Messages.INVALID_POSITION.formatted
 			 	 		(Messages.POSITION.formatted(words[2], words[3])));
 			}
-		} 
+		}
+		if(matchCommandName(words[0]) && words.length >= 5) {
+			throw new CommandParseException(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER);
+		}
+			
 		return null;
 	}
 	

@@ -26,7 +26,7 @@ public class LemmingRoleFactory {
 			}
 		}
 		
-		throw new RoleParseException(Messages.ERROR_LEMMING_ROL);
+		throw new RoleParseException(Messages.ERROR_LEMMING_ROL.formatted(input));
 	}
 	
 	public static String commandHelp() {

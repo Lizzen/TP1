@@ -1,0 +1,12 @@
+Line: 25
+Expected: [ERROR] Error: Incorrect parameter number
+Actual: [ERROR] Error: Unknown command: setRole
+Line: 106
+Expected:   F┃                 B   🚪B           ▓▓▓▓▓          ┃F
+Actual:   F┃                 B   B🚪           ▓▓▓▓▓          ┃F
+Line: 31
+Expected: [ERROR] Error: Invalid game status "2 0 3 5"
+Actual: [ERROR] Error: Invalid game status: "2 0 3 5"
+Line: 69
+Expected:    File "patata" correctly saved
+Actual: 	File "patata" correctly saved

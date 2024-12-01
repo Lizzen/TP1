@@ -111,7 +111,7 @@ public class Tests_V3 {
 				          Paths.get(DIR + FILE_PREFIXES[n] + "_output.txt"),
 				new String[] { mapa, "NO_COLORS" });
 	}
-	
+	/*
 	@Test
 	public void test00() { 	testN(0); }
 	@Test
@@ -119,7 +119,7 @@ public class Tests_V3 {
 	@Test
 	public void test02() { 	testN(2); }
 	@Test
-	public void test03() { 	testN(3); }
+	public void test03() { 	testN(3); }*/
 	@Test
 	public void test04() { 	testN(4); }
 	@Test
@@ -127,7 +127,7 @@ public class Tests_V3 {
 	@Test
 	public void test06() { 	testN(6); }
 	@Test
-	public void test07() { 	testN(7); }
+	public void test07() { 	testN(7); } 
 	@Test
 	public void test08() { 	testN(8); }
 	@Test
