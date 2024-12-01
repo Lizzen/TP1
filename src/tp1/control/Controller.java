@@ -48,6 +48,7 @@ public class Controller {
 	 			Throwable cause = e.getCause();
 	 			if (cause != null) 
 	 			    view.showError(cause.getMessage());
+	 			view.showMessage(Messages.EMPTY);
 			}
 
 			

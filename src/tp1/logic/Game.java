@@ -1,11 +1,16 @@
 package tp1.logic;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.nio.Buffer;
 
+import tp1.exceptions.GameLoadException;
+import tp1.exceptions.GameModelException;
 import tp1.exceptions.OffBoardException;
+import tp1.exceptions.RoleParseException;
 import tp1.logic.gameobjects.ExitDoor;
-import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.Lemming;
 import tp1.logic.gameobjects.MetalWall;
-import tp1.view.Messages;
 import tp1.logic.gameobjects.Wall;
 import tp1.logic.lemmingRoles.LemmingRole;
 import tp1.logic.lemmingRoles.ParachuteRole;
@@ -19,19 +24,35 @@ public class Game implements GameModel, GameStatus, GameWorld{
 	private int cycle = 0;
 	private int lemmingsToWin;
 	private int numLemmingsInBoard = 0;
+	private int numLemmingsDead = 0;
+	private int numLemmingsExit = 0;
 	private boolean exit = false;
+	FileGameConfiguration conf;
 
 	public Game(int nLevel) {
 		this.nLevel = nLevel;
 		this.gobc = new GameObjectContainer(this);
+		conf = new FileGameConfiguration();
 		if (this.nLevel < 2) {
 			initGame(this.nLevel);
 		}
 		else {
 			initGame2();
 		}
+		
 	}
-
+	public void load(String fileName) throws  GameLoadException{
+		try{
+		this.conf = new FileGameConfiguration(fileName, this);
+		this.cycle = this.conf.getCycle();
+		this.numLemmingsInBoard = this.conf.numLemmingsInBoard();
+		this.lemmingsToWin = this.conf.numLemmingsToWin();
+		this.numLemmingsDead = this.conf.numLemmingsDead();
+		this.gobc = this.conf.getGameObjects();
+		}catch(GameLoadException e){
+			throw e;
+		}
+	}
 	public void initGame(int nLevel){
 		//Lemmings
 		this.lemmingsToWin = 2;
@@ -48,7 +69,7 @@ public class Game implements GameModel, GameStatus, GameWorld{
 		for(int i = 2; i < 5; i++) {
 			this.gobc.add(new Wall(this, 4, i));
 		}
-		for(int i = 8; i < 11; i++) {
+		for(int i = 8; i < 10; i++) {
 			this.gobc.add(new Wall(this, 1, i));
 			this.gobc.add(new Wall(this, 9, i));
 		}
@@ -104,16 +125,25 @@ public class Game implements GameModel, GameStatus, GameWorld{
 		this.gobc.update();
 	}
 	
-	public void reset() {
-		this.numLemmingsInBoard = 0;
-		this.gobc = new GameObjectContainer(this);
-		if (this.nLevel < 2) {
-			initGame(this.nLevel);
+	public void reset() throws GameLoadException {
+		if(this.conf.equals(FileGameConfiguration.NONE)){//si es igual a un FileGameConfiguration vacio, reset normal
+			this.numLemmingsInBoard = 0;
+			this.gobc = new GameObjectContainer(this);
+			if (this.nLevel < 2) {
+				initGame(this.nLevel);
+			}
+			else {
+				initGame2();
+			}
+			this.cycle = 0;
+		}else{// si no reseteamos con el fichero
+			try {
+				load(this.conf.getFileName());
+			} catch (GameLoadException e) {
+				// TODO Auto-generated catch block
+				throw e;
+			}
 		}
-		else {
-			initGame2();
-		}
-		this.cycle = 0;
 	}
 
 	public int getCycle() {
@@ -125,11 +155,11 @@ public class Game implements GameModel, GameStatus, GameWorld{
 	}
 
 	public int numLemmingsDead() {
-		return this.gobc.getDeads();
+		return numLemmingsDead;
 	}
 
 	public int numLemmingsExit() {
-		return this.gobc.numLemmingsExit();
+		return numLemmingsExit;
 	}
 
 	public int numLemmingsToWin() {
@@ -166,11 +196,14 @@ public class Game implements GameModel, GameStatus, GameWorld{
 		this.exit = exit;
 	}
 	
-	public boolean setRole(LemmingRole rol, Position pos) throws OffBoardException {
+	public boolean setRole(LemmingRole rol, Position pos) throws OffBoardException, RoleParseException {
 		try {
 			boolean ret = this.gobc.setRole(rol, pos);
 			return ret;
 		} catch (OffBoardException e) {
+			throw e;
+		}
+		catch (RoleParseException e) {
 			throw e;
 		}
 	}
@@ -178,5 +211,34 @@ public class Game implements GameModel, GameStatus, GameWorld{
 	@Override
 	public boolean receiveInteractionsFrom(GameItem item) {
 		return this.gobc.receiveInteractionsFrom(item);
+	}
+	
+	public void addDead() {
+		this.numLemmingsDead++;
+	}
+	
+	public void addExit() {
+		this.numLemmingsExit++;
+	}
+	
+	public String toSave() {
+		String ret = "";
+		ret += this.cycle +" "+ this.numLemmingsInBoard() +" "+ this.numLemmingsDead +" "+ this.numLemmingsExit +" "+ this.lemmingsToWin + "\n";
+		ret += this.gobc.toSave();
+		return ret;
+	}
+	public void save(String fileName) throws GameModelException {
+		
+		try{
+			File ficheroSalida = new File(fileName);
+			FileWriter salida = new FileWriter(ficheroSalida);
+			BufferedWriter writer = new BufferedWriter(salida);
+			writer.write(this.toSave());
+			writer.close();
+
+		}catch(Exception e){
+			throw new GameModelException("Error al guardar el fichero");
+		}
+		
 	}
 }

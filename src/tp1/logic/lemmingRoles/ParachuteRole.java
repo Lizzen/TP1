@@ -25,4 +25,8 @@ public class ParachuteRole extends AbstractRol implements LemmingRole{
 	public String getIcon(Lemming lemming) {
 		return ICON;
 	}
+	@Override
+	public String getName() {
+		return NAME;
+	}
 }

@@ -26,10 +26,6 @@ public class DownCaverRole extends AbstractRol implements LemmingRole {
 		return ICON;
 	}
 	
-	public String getName() {
-		// TODO Auto-generated method stub
-		return NAME;
-	}
 	
 	public String getHelp() {
 		return HELP;
@@ -61,7 +57,7 @@ public class DownCaverRole extends AbstractRol implements LemmingRole {
 	@Override
 	public boolean interactWith(MetalWall metalWall, Lemming owner) {
 		if (owner.getPos().equals(metalWall.getPos())) {
-			owner.getPos().setRow(owner.getPos().getRow() - 1);
+			owner.up();
 			owner.disableRole();
 			owner.walkOrFall();
 			return true;

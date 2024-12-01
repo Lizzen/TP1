@@ -1,6 +1,6 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.Game;
+import tp1.exceptions.ObjectParseException;
 import tp1.logic.GameItem;
 import tp1.logic.GameWorld;
 import tp1.logic.Position;
@@ -14,16 +14,21 @@ public abstract class GameObject implements GameItem{
 	protected String name;
 	protected String shortcut;
 	
-	public GameObject(Game game, int row, int col) {
+	public GameObject(GameWorld game, int row, int col) {
 		this.game = game;
 		this.pos = new Position(row, col);
 		this.alive = true;
 	}
+	public GameObject(GameWorld game) {
+		this.game = game;
+		this.alive = true;
+	}
 	
+
 	public GameObject(String name, String shortcut) {
 		this.name = name;
 		this.shortcut = shortcut;
-		//this.alive = true;
+		this.alive = true;
 	}
 	public void update() {
 		return ;
@@ -41,11 +46,14 @@ public abstract class GameObject implements GameItem{
 		return false;
 	}
 	
-	@Override
 	public boolean isSolid() {
 		return false;
 	}
-	
+
+	public Position getPos() {
+		
+		return pos;
+	}
 	
 	public boolean isAlive() {
 		return alive;
@@ -72,7 +80,7 @@ public abstract class GameObject implements GameItem{
 		return getName().equalsIgnoreCase(name) || getShortcut().equalsIgnoreCase(name);
 	}
 	
-	public void setIniDirection(String input) {
+	public void setIniDirection(String input) throws ObjectParseException {
 		return;
 	}
 	
@@ -88,6 +96,14 @@ public abstract class GameObject implements GameItem{
 		
 		return null;
 	}
+	
+	public boolean dentroRango() {
+		if (pos.getRow() >= 0 && pos.getCol() < 10 && pos.getCol() >= 0 && pos.getCol() < 10) {
+			return true;
+		}
+		return false;
+	}
+	public abstract String toSave();
 	
 	/*private static Position getPositionFrom(String line) throws ObjectParseException, OffBoardException {...}
 	private static String getObjectNameFrom(String line) throws ObjectParseException {...}
@@ -107,4 +123,5 @@ public abstract class GameObject implements GameItem{
 	public abstract boolean isWin();
 	public abstract String toString();
 	public abstract boolean collision (int x, int y);
+	public abstract GameObject copy ();
 }

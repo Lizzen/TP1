@@ -18,4 +18,5 @@ public interface LemmingRole {
 	public boolean interactWith(MetalWall metalWall, Lemming owner);
 	public String helpText();
 	public boolean equals(Object obj);
+	public String getName();
 }

@@ -1,8 +1,10 @@
 package tp1.logic.gameobjects;
 
+import tp1.exceptions.ObjectParseException;
 import tp1.logic.*;
 import tp1.logic.lemmingRoles.LemmingRole;
 import tp1.logic.lemmingRoles.WalkerRole;
+import tp1.view.Messages;
 
 public class Lemming extends GameObject {
 	private static final String NAME = "Lemming";
@@ -14,7 +16,25 @@ public class Lemming extends GameObject {
 	private Direction direccion;
 	private LemmingRole role;
 	
-	public Lemming(Game game, int x, int y, LemmingRole role) {
+
+	@Override
+	public Lemming parse(String line, GameWorld game) {
+		if (matchRolName(line)) {
+			
+			return new Lemming(game);
+			
+		}
+		return null;
+	}
+	public Lemming(GameWorld game) {
+		super(game);
+		this.enAire = false;
+		this.isWin = false;
+		this.exit = false;
+		this.role = new WalkerRole();
+	}
+	
+	public Lemming(GameWorld game, int x, int y, LemmingRole role) {
 		super(game, x, y);
 		this.enAire = false;
 		this.isWin = false;
@@ -44,8 +64,15 @@ public class Lemming extends GameObject {
 	
 	public void walkOrFall() { 
 		if (!exit) {
-			if (!game.collision(pos.getRow() + 1, pos.getCol())) {
+			if (!game.collision(pos.getRow() + 1, pos.getCol()) && pos.getRow() != 9) {
 				enAire = true;
+			}
+			else if (pos.getRow() == 9 || this.caida >= 3 && enAire) {
+				this.alive = false;					
+			} 
+			else {
+				caida =  0;
+				enAire = false;
 			}
 			
 			if (isEnAire()) {
@@ -85,15 +112,10 @@ public class Lemming extends GameObject {
 	public void fall() {
 		int y = pos.getRow();
 		
-		if (y == 9 || this.caida >= 3 && game.collision(pos.getRow()+1, pos.getCol())) {
-			this.alive = false;
-		}
-		else {
-			pos.setRow(y + 1);
-			if (this.caida < 3 && game.collision(pos.getRow()+1, pos.getCol())){
-				enAire = false;
-				caida = 0;
-			}
+		pos.setRow(y + 1);
+		if (this.caida < 3 && game.collision(pos.getRow()+1, pos.getCol())){
+			enAire = false;
+			caida = 0;
 		}
 	}
 	
@@ -105,6 +127,18 @@ public class Lemming extends GameObject {
 			caida++;
 			disableRole();
 		}
+	}
+	
+	public void up() {
+		pos.setRow(pos.getRow() - 1);
+	}
+	
+	public void iz() {
+		pos.setCol(pos.getCol() - 1);
+	}
+	
+	public void der() {
+		pos.setCol(pos.getCol() + 1);
 	}
 	
 	public String toString() {
@@ -145,6 +179,7 @@ public class Lemming extends GameObject {
 	
 	public void setWin(boolean win) {
 		this.isWin =  win;
+		this.game.addExit();
 	}
 	
 	public boolean setRole(LemmingRole role) {
@@ -160,12 +195,19 @@ public class Lemming extends GameObject {
 		this.exit = exit;
 	}
 	
-	public void setIniDirection(String input) {
+	@Override
+	public void setIniDirection(String input) throws ObjectParseException {
 		if (input.equalsIgnoreCase("right")) {
 			this.direccion = Direction.RIGHT;
 		}
-		else {
+		else if (input.equalsIgnoreCase("left")){
 			this.direccion = Direction.LEFT;
+		}
+		else if (input.equalsIgnoreCase("up") || input.equalsIgnoreCase("down")) {
+			throw new ObjectParseException(Messages.ERROR_LEMMINGS_DIR);
+		}
+		else {
+			throw new ObjectParseException(Messages.ERROR_OBJECTS_DIR);
 		}
 	}
 	
@@ -174,10 +216,7 @@ public class Lemming extends GameObject {
 		return caida;
 	}
 
-	public Position getPos() {
-		return pos;
-	}
-
+	
 	public Direction getDireccion() {
 		return direccion;
 	}
@@ -214,5 +253,25 @@ public class Lemming extends GameObject {
 	@Override
 	public boolean isExit() {
 		return exit;
+	}
+	public Lemming copy () {
+		Lemming lemming = new Lemming(this.game);
+		lemming.setPos(this.pos);
+		lemming.copyWin(this.isWin);
+		lemming.setExit(this.exit);
+		lemming.setCaida(this.caida);
+		lemming.setEnAire(this.enAire);
+		lemming.setDireccion(this.direccion);
+		lemming.setRole(this.role);
+		return lemming;
+	}
+	void copyWin(boolean win) {
+		this.isWin = win;
+	}
+	@Override
+	public String toSave() {
+		String ret="";
+		ret+="("+this.pos.getRow()+","+this.pos.getCol()+") "+ NAME + " " + this.direccion.toSave()+ " " + this.caida + " "+this.role.getName()+"\n";
+		return ret;
 	}
 }

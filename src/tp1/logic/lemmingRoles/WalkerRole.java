@@ -59,15 +59,11 @@ public class WalkerRole extends AbstractRol implements LemmingRole {
 		if (owner.getPos().equals(wall.getPos())) {
 			if (owner.getDireccion().equals(Direction.RIGHT)) {
 				owner.setDireccion(Direction.LEFT);
-				Position pos = owner.getPos();
-				pos.setCol(pos.getCol() - 1);
-				owner.setPos(pos);
+				owner.iz();
 			}
 			else {
 				owner.setDireccion(Direction.RIGHT);
-				Position pos = owner.getPos();
-				pos.setCol(pos.getCol() + 1);
-				owner.setPos(pos);
+				owner.der();
 			}
 			return true;
 		}
@@ -80,15 +76,11 @@ public class WalkerRole extends AbstractRol implements LemmingRole {
 		if (owner.getPos().equals(metalWall.getPos())) {
 			if (owner.getDireccion().equals(Direction.RIGHT)) {
 				owner.setDireccion(Direction.LEFT);
-				Position pos = owner.getPos();
-				pos.setCol(pos.getCol() - 1);
-				owner.setPos(pos);
+				owner.iz();
 			}
 			else {
 				owner.setDireccion(Direction.RIGHT);
-				Position pos = owner.getPos();
-				pos.setCol(pos.getCol() + 1);
-				owner.setPos(pos);
+				owner.der();
 			}
 			return true;
 		}

@@ -4,7 +4,7 @@ import tp1.util.MyStringUtils;
 
 public class Messages {
 	
-	public static final String VERSION = "2.2";
+	public static final String VERSION = "3.0";
 
 	public static final String GAME_NAME = "Lemmings";
 
@@ -20,7 +20,7 @@ public class Messages {
 	public static final String PROMPT = "Command > ";
 
 	public static final String DEBUG = "[DEBUG] Executing: %s%n";
-	public static final String ERROR = "[ERROR] Error: %s%n";
+	public static final String ERROR = "[ERROR] Error: %s";
 	
 	// GAME STATUS
 	public static final String NUMBER_OF_CYCLES = "Number of cycles: %s";
@@ -32,7 +32,7 @@ public class Messages {
 	public static final String GAME_OVER = "Game over";
 	public static final String PLAYER_QUITS = "Player leaves the game";
 	public static final String PLAYER_WINS = "Player wins!";
-	public static final String PLAYER_LOOSES = "Player loses...";
+	public static final String PLAYER_LOOSES = "Player lose...";
 
 	// Position format
 	public static final String POSITION = "(%s,%s)";
@@ -48,7 +48,7 @@ public class Messages {
 //Commands
 	// Errores de factorías:
 	public static final String UNKNOWN_COMMAND = "Unknown command: %s";
-	public static final String UNKNOWN_GAME_OBJECT = "Unknown game object: %s";
+	public static final String UNKNOWN_GAME_OBJECT = "Unknown game object: \"%s\"";
 	public static final String UNKNOWN_ROLE = "Unknown role: %s";
 	// Errores de commandos:
 	public static final String COMMAND_PARAMETERS_MISSING = "Missing parameters";
@@ -61,11 +61,16 @@ public class Messages {
 	public static final String INVALID_COMMAND = "Invalid command: %s";
 	public static final String INVALID_DIRECTION = "Invalid direction: %s";
 	public static final String INVALID_HEIGHT = "Invalid height: %s";
-	public static final String INVALID_GAME_STATUS = "Invalid game status";
+	public static final String INVALID_GAME_STATUS = "Invalid game status: \"%s\"";
 	public static final String INVALID_INIT_CONF = "Invalid init configuration because %s";
 	public static final String ERROR_INVALID_INIT_CONF = "Unknown invalid init configuration";
 	public static final String ERROR_PARSING_GAME_OBJECT = "Not a correct game object because: %s";
-
+	public static final String ERROR_OBJECTS_OFFBOARD = "Object position is off board: \"%s\"";
+	public static final String ERROR_OBJECTS_DIR = "Unknown object direction: \"%s\"";
+	public static final String ERROR_LEMMING_ROL = "Invalid lemming role: \"%s\"";
+	public static final String ERROR_OBJECTS_POS = "Invalid object position: \"%s\"";
+	public static final String ERROR_LEMMINGS_DIR = "Invalid lemming direction: \"%s\"";
+	public static final String ERROR_INVALID_FILE = "Invalid file \"%s\" configuration";
 	
 	public static final String HELP_AVAILABLE_COMMANDS = "Available commands:";
 	public static final String COMMAND_HELP_TEXT = "%s: %s";
@@ -110,7 +115,21 @@ public class Messages {
 	public static final String COMMAND_SETROLE_NAME = "setRole";
 	public static final String COMMAND_SETROLE_SHORTCUT = "sr";
 	public static final String COMMAND_SETROLE_DETAILS = "[s]et[R]ole ROLE ROW COL";
-	public static final String COMMAND_SETROLE_HELP = "sets the lemming in position " + "(ROW,COL) to role ROLE";		
+	public static final String COMMAND_SETROLE_HELP = "sets the lemming in position " + "(ROW,COL) to role ROLE";	
+	
+	//LOAD
+	public static final String COMMAND_LOAD_NAME = "load";
+	public static final String COMMAND_LOAD_SHORTCUT = "l";
+	public static final String COMMAND_LOAD_DETAILS = "[l]oad <fileName>";
+	public static final String COMMAND_LOAD_HELP = "load the game configuration from text file <fileName>";
+	
+	//SAVE
+	public static final String COMMAND_SAVE_NAME = "save";
+	public static final String COMMAND_SAVE_SHORTCUT = "s";
+	public static final String COMMAND_SAVE_DETAILS = "[s]ave <fileName>";
+	public static final String COMMAND_SAVE_HELP = "save the actual configuration in text file <fileName>";	
+	public static final String COMMAND_SAVE_SUCCES = "	File \"%s\" correctly saved%n";
+	
 //Roles
 	// WALKER
 	public static final String WALKER_ROL_SYMBOL = "W";

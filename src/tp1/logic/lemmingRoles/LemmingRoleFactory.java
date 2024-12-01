@@ -5,6 +5,7 @@ import java.util.List;
 
 import tp1.control.commands.Command;
 import tp1.exceptions.RoleParseException;
+import tp1.view.Messages;
 
 
 public class LemmingRoleFactory {
@@ -25,7 +26,7 @@ public class LemmingRoleFactory {
 			}
 		}
 		
-		throw new RoleParseException("Invalid lemming role: ");
+		throw new RoleParseException(Messages.ERROR_LEMMING_ROL);
 	}
 	
 	public static String commandHelp() {

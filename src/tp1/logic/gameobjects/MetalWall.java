@@ -1,7 +1,8 @@
 package tp1.logic.gameobjects;
 
-import tp1.logic.Game;
+
 import tp1.logic.GameItem;
+import tp1.logic.GameWorld;
 import tp1.logic.Position;
 import tp1.view.Messages;
 
@@ -9,17 +10,31 @@ public class MetalWall extends GameObject {
 	private static final String NAME = "MetalWall";
 	private static final String SHORTCUT = "MW";
 	
-	public MetalWall(Game game, int row, int col) {
+	public MetalWall(GameWorld game, int row, int col) {
 		super(game, row, col);
+	}
+	
+	public MetalWall copy() {
+		return new MetalWall(game, pos.getRow(), pos.getCol());
 	}
 	
 	public MetalWall() {
 		super(NAME, SHORTCUT);
 	}
-	
-	public Position getPos() {
-		return this.pos;
+	public MetalWall(GameWorld game) {
+		super(game);
 	}
+	
+	@Override
+	public MetalWall parse(String line, GameWorld game) {
+		if (matchRolName(line)) {
+			this.game = game;
+			return new MetalWall();
+		}
+		return null;
+	}
+
+
 	public void setPos(Position pos) {
 		this.pos = pos;
 	}
@@ -59,5 +74,11 @@ public class MetalWall extends GameObject {
 	@Override
 	public boolean isSolid() {
 		return true;
+	}
+
+	public String toSave() {
+		String ret="";
+		ret+="("+this.pos.getRow()+","+this.pos.getCol()+") "+ NAME+ "\n";
+		return ret;
 	}
 }

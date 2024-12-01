@@ -22,7 +22,16 @@ public enum Direction {
 	public int getY() {
 		return y;
 	}
-
+	
+	public String toSave() {
+		String ret= "";
+		if(this == LEFT) ret= "LEFT";
+		if(this == RIGHT) ret= "RIGHT";
+		if(this == DOWN) ret= "DOWN";
+		if(this == UP) ret= "UP";
+		if(this == NONE) ret= "NONE";
+		return ret;
+	}
 
 	//TODO fill your code
 	

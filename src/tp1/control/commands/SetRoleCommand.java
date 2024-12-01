@@ -37,6 +37,9 @@ public class SetRoleCommand extends Command{
 		} catch (OffBoardException obe) {
 			throw new CommandExecuteException(Messages.ERROR_COMMAND_EXECUTE, obe);
 		}
+		catch (RoleParseException e) {
+			throw new CommandExecuteException(e.getMessage());
+		}
 
 		return false;
 	}
@@ -45,7 +48,7 @@ public class SetRoleCommand extends Command{
 	public Command parse(String[] words) throws CommandParseException {
 		if(matchCommandName(words[0]) && words.length < 5) {
 			try {
-				int x = Character.toUpperCase(words[2].charAt(0)) - 'A';
+				int x = (words[2].charAt(0)) - 'A';
 				int y = Integer.parseInt(words[3]) - 1;
 				
 				
