@@ -46,7 +46,7 @@ public class GameObjectFactory {
 						ret.setCaida(Integer.parseInt(line[3]));		
 						ret.setRole(LemmingRoleFactory.parse(line[4]));
 					} catch (RoleParseException e) {
-						throw new ObjectParseException(e.getMessage().formatted(input));
+						throw new ObjectParseException(Messages.ERROR_LEMMING_ROL.formatted(input));
 					} catch (ObjectParseException e) {
 						throw new ObjectParseException(e.getMessage().formatted(input));
 					}
