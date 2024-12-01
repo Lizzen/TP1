@@ -46,6 +46,9 @@ public class SetRoleCommand extends Command{
 	
 	@Override
 	public Command parse(String[] words) throws CommandParseException {
+		if (words.length < 1 || !matchCommandName(words[0]))
+	 		return null;
+		
 		if(matchCommandName(words[0]) && words.length < 5) {
 			try {
 				int x = (words[2].charAt(0)) - 'A';
@@ -55,7 +58,7 @@ public class SetRoleCommand extends Command{
 				try {
 					role = LemmingRoleFactory.parse(words[1]);
 				} catch (RoleParseException e) {
-					throw new CommandParseException(e.getMessage());
+					throw new CommandParseException(Messages.INVALID_COMMAND_PARAMS, e);
 				}
 				
 				if (role != null) {
@@ -67,12 +70,9 @@ public class SetRoleCommand extends Command{
 			 	throw new CommandParseException(Messages.INVALID_POSITION.formatted
 			 	 		(Messages.POSITION.formatted(words[2], words[3])));
 			}
-		}
-		if(matchCommandName(words[0]) && words.length >= 5) {
-			throw new CommandParseException(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER);
-		}
-			
-		return null;
+		} 
+
+		throw new CommandParseException(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER);
 	}
 	
 	@Override
