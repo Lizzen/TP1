@@ -48,6 +48,7 @@ public class Game implements GameModel, GameStatus, GameWorld{
 		this.numLemmingsInBoard = this.conf.numLemmingsInBoard();
 		this.lemmingsToWin = this.conf.numLemmingsToWin();
 		this.numLemmingsDead = this.conf.numLemmingsDead();
+		this.numLemmingsExit=this.conf.numLemmingsExit();
 		this.gobc = this.conf.getGameObjects();
 		}catch(GameLoadException e){
 			throw e;
@@ -55,6 +56,8 @@ public class Game implements GameModel, GameStatus, GameWorld{
 	}
 	public void initGame(int nLevel){
 		//Lemmings
+		this.numLemmingsExit=0;
+		this.numLemmingsDead=0;
 		this.lemmingsToWin = 2;
 		this.gobc.add(new Lemming(this, 3, 2, null));
 		this.gobc.add(new Lemming(this, 8, 0, null));
@@ -87,6 +90,8 @@ public class Game implements GameModel, GameStatus, GameWorld{
 	
 	public void initGame2(){
 		//Lemmings
+		this.numLemmingsExit=0;
+		this.numLemmingsDead=0;
 		this.lemmingsToWin = 2;
 		this.gobc.add(new Lemming(this, 3, 2, null));
 		this.gobc.add(new Lemming(this, 8, 0, null));
