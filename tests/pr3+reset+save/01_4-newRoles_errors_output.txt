@@ -27,6 +27,7 @@ Command > [DEBUG] Executing: setRole Walker I 2 33
 Command > [DEBUG] Executing: setRole Patata I 2
 
 [ERROR] Error: Invalid command parameters
+[ERROR] Error: Invalid lemming role: "Patata"
 
 Command > [DEBUG] Executing: sEtROle Walker I 1
 
@@ -48,6 +49,7 @@ Command > [DEBUG] Executing: setRole Parachuter A 100
 Command > [DEBUG] Executing: setRole Parachu A 10
 
 [ERROR] Error: Invalid command parameters
+[ERROR] Error: Invalid lemming role: "Parachu"
 
 Command > [DEBUG] Executing: sEtROle doWnCaVer A 10
 

@@ -53,7 +53,7 @@ Command > [DEBUG] Executing: load conf_6
 Command > [DEBUG] Executing: load conf_7		
 
 [ERROR] Error: Invalid file "conf_7" configuration
-[ERROR] Error: Invalid lemming role: "Looser"
+[ERROR] Error: Invalid lemming role: "(3,2) Lemming RIGHT 10 Looser"
 
 Command > [DEBUG] Executing: load conf_8
 

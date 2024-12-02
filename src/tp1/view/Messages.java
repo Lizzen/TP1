@@ -61,7 +61,7 @@ public class Messages {
 	public static final String INVALID_COMMAND = "Invalid command: %s";
 	public static final String INVALID_DIRECTION = "Invalid direction: %s";
 	public static final String INVALID_HEIGHT = "Invalid height: %s";
-	public static final String INVALID_GAME_STATUS = "Invalid game status: \"%s\"";
+	public static final String INVALID_GAME_STATUS = "Invalid game status \"%s\"";
 	public static final String INVALID_INIT_CONF = "Invalid init configuration because %s";
 	public static final String ERROR_INVALID_INIT_CONF = "Unknown invalid init configuration";
 	public static final String ERROR_PARSING_GAME_OBJECT = "Not a correct game object because: %s";
