@@ -11,6 +11,7 @@ public boolean isFinished();
 // PLAYER ACTIONS
 public void update();
 public void reset() throws GameLoadException;
+public void reset(int nLevel) throws GameLoadException;
 // …
 public void load(String fileName) throws GameLoadException;
 public void setExit(boolean b);

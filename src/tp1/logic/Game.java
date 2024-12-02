@@ -39,8 +39,8 @@ public class Game implements GameModel, GameStatus, GameWorld{
 		else {
 			initGame2();
 		}
-		
 	}
+	
 	public void load(String fileName) throws  GameLoadException{
 		try{
 		this.conf = new FileGameConfiguration(fileName, this);
@@ -149,6 +149,19 @@ public class Game implements GameModel, GameStatus, GameWorld{
 				throw e;
 			}
 		}
+	}
+	
+	public void reset(int nLevel) throws GameLoadException {
+			this.nLevel = nLevel;
+			this.numLemmingsInBoard = 0;
+			this.gobc = new GameObjectContainer(this);
+			this.cycle = 0;
+			if (this.nLevel < 2) {
+				initGame(this.nLevel);
+			}
+			else {
+				initGame2();
+			}
 	}
 
 	public int getCycle() {
