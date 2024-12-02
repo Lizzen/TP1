@@ -3,119 +3,124 @@ package tp1.logic;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import tp1.logic.gameobjects.ExitDoor;
-import tp1.logic.gameobjects.Lemming;
-import tp1.logic.gameobjects.Wall;
+import tp1.exceptions.GameModelException;
+import tp1.exceptions.OffBoardException;
+import tp1.exceptions.RoleParseException;
+import tp1.logic.gameobjects.GameObject;
+import tp1.logic.lemmingRoles.LemmingRole;
 import tp1.view.Messages;
 
-
 public class GameObjectContainer {
-	protected Game game;
-	protected int x, y;
-	private  ArrayList<Lemming> lemmings;
-	private  ArrayList<Wall> walls;
-	private  ExitDoor exitDoor;
+	protected GameWorld game;
+	private  ArrayList<GameObject> objects;
 	private int deads = 0;
-	
-	public GameObjectContainer(Game game) {
+
+	public GameObjectContainer(GameWorld game) {
 		this.game = game;
-		this.lemmings = new ArrayList<Lemming>();
-		this.walls = new ArrayList<Wall>();
-		this.exitDoor = null;
+		this.objects = new ArrayList<GameObject>();
 	}
 	
+	
 	public void update() {
-	    Iterator<Lemming> iterator = lemmings.iterator();
+	    Iterator<GameObject> iterator = objects.iterator();
 	    while (iterator.hasNext()) {
-	        Lemming GO = iterator.next();
-	        if (GO.isEstaVivo() && !GO.isWin()) {
+	    	GameObject GO = iterator.next();
+	        if (GO.isAlive() && !GO.isWin()) {
 	            GO.update();
 	        }
-	        if (!GO.isEstaVivo()) {
-	            iterator.remove(); 
-	            deads++;
+	        if (!GO.isAlive()) {
+	        	iterator.remove(); 
+	            if (!GO.isSolid()) {
+					this.game.addDead();
+	            }
+	            
+	        }
+	        if(GO.isWin()) {
+	        	iterator.remove();
 	        }
 	    }
+	}
+	
+	public void add(GameObject obj) {
+		this.objects.add(obj);
 	}
 	
 	public int getDeads() {
 		return deads;
 	}
-	
-	public String ObjectsInPosition(int x, int y) {
+
+	public String ObjectsInPosition(Position posicion) {
 		String ret = ""; 
-		boolean esLemming = false;
-		for(Lemming GO: this.lemmings) {
-			if(!GO.isWin() && GO.isEstaVivo() && GO.isInPosition(x, y)) {
-				ret += GO.toString();
-				esLemming = true;
-			}
+
+		for(GameObject GO: this.objects) {
+			if(GO.isInPosition(posicion) && !GO.isWin())
+				ret+=GO.toString();
 		}
-		
-		if (!esLemming) {
-			for(Wall GO: this.walls) {
-				if(GO.isInPosition(x, y)) ret = Messages.WALL;			
-			}
-		}
-		
-		if (exitDoor.isInPosition(x, y)) ret += Messages.EXIT_DOOR;
 
 		return ret;
 	}
+
 	
-	public int numLemmingsInBoard() {
-		int ret = 0;
-		
-		for(Lemming GO: this.lemmings) {
-			if(GO.isEstaVivo() && !GO.isWin()) {
-				ret++;
+	public boolean setRole(LemmingRole rol, Position posicion) throws OffBoardException, RoleParseException {
+		if (posicion.getRow() >= 0 && posicion.getRow() < 10 && posicion.getCol() >= 0 && posicion.getCol() < 10) {
+			for(GameObject GO: this.objects) {
+				if(GO.isInPosition(posicion) && GO.setRole(rol))
+					return true;
 			}
+			
+			throw new RoleParseException("No lemming in position " + Messages.POSITION.formatted(posicion.getRow(), posicion.getCol()) + " admits role " + rol.getName());
 		}
-		return ret;
+		else {
+			throw new OffBoardException("Position " + Messages.POSITION.formatted(posicion.getRow(), posicion.getCol()) + " is off board");
+		}
 	}
 	
 	public int numLemmingsExit() {
 		int ret = 0;
-		for(Lemming GO: this.lemmings) {
+		for(GameObject GO: this.objects) {
 			if(GO.isWin()) {
 				ret++;
 			}
 		}
 		return ret;
 	}
-	
-    public void addLemming(Lemming lemming) {
-    	this.lemmings.add(lemming);
-    }
     
-    public void addWall(Wall wall) {
-    	this.walls.add(wall);
-    }
-    
-    public boolean getCollision(int x, int y) {
-    	boolean ret = false;
-		for(Wall GO: this.walls) {
-			if(GO.isInPosition(x, y)) ret = true;			
+    public boolean getCollision(Position pos) {
+		for(GameObject GO: this.objects) {
+			if(GO.isInPosition(pos) && GO.isSolid()) return true;			
 		}
 		
-		return ret;
+		return false;
     }
     
-    public boolean doorCollision(int x, int y) {
-		
-		return this.exitDoor.isInPosition(x, y);
+    public int getobjectsSize() {
+    	return this.objects.size();
     }
 
-	public int getWalls() {
-    	return this.walls.size();
-    }
-    
-    public int getLemmings() {
-    	return this.lemmings.size();
-    }
-
-	public void addExitDoor(ExitDoor exitDoor) {
-		this.exitDoor = exitDoor;
-		
+	public boolean receiveInteractionsFrom(GameItem item) {
+		for(GameObject GO: this.objects) {
+			if (GO.receiveInteraction(item)) {
+				return true;
+			}	
+		}
+		return false;
 	}
+	public GameObjectContainer copy() {
+		GameObjectContainer ret = new GameObjectContainer(this.game);
+		for(GameObject GO: this.objects) {
+			ret.add(GO.copy());
+		}
+		return ret;
+	}
+	
+	public String toSave() {
+		String ret = "";
+		for(GameObject GO: this.objects) {
+			if(GO.dentroRango()) {
+				ret += GO.toSave();
+			}
+		}
+		return ret;
+	}
+	
 }

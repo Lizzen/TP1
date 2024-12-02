@@ -6,38 +6,39 @@ import tp1.logic.GameWorld;
 import tp1.logic.Position;
 import tp1.view.Messages;
 
-public class Wall extends GameObject {
-	private static final String NAME = "Wall";
-	private static final String SHORTCUT = "W";
+public class MetalWall extends GameObject {
+	private static final String NAME = "MetalWall";
+	private static final String SHORTCUT = "MW";
 	
-	public Wall(GameWorld game, int row, int col) {
+	public MetalWall(GameWorld game, int row, int col) {
 		super(game, row, col);
 	}
 	
-	public Wall() {
+	public MetalWall copy() {
+		return new MetalWall(game, pos.getRow(), pos.getCol());
+	}
+	
+	public MetalWall() {
 		super(NAME, SHORTCUT);
 	}
-	public Wall(GameWorld game) {
+	public MetalWall(GameWorld game) {
 		super(game);
-	}
-	public Wall copy() {
-		return new Wall(game, pos.getRow(), pos.getCol());
 	}
 	
 	@Override
-	public Wall parse(String line, GameWorld game) {
+	public MetalWall parse(String line, GameWorld game) {
 		if (matchRolName(line)) {
 			this.game = game;
-			return new Wall();
+			return new MetalWall();
 		}
 		return null;
 	}
 
-	
+
 	public void setPos(Position pos) {
 		this.pos = pos;
 	}
-	
+
 	public String getNAME() {
 		return NAME;
 	}
@@ -53,13 +54,8 @@ public class Wall extends GameObject {
 	}
 	
 	@Override
-	public boolean isSolid() {
-		return true;
-	}
-
-	@Override
 	public String toString() {
-		return Messages.WALL;
+		return Messages.METALWALL;
 	}
 
 	@Override
@@ -74,9 +70,15 @@ public class Wall extends GameObject {
 	public boolean receiveInteraction(GameItem other) {
 		return other.interactWith(this);
 	}
+
+	@Override
+	public boolean isSolid() {
+		return true;
+	}
+
 	public String toSave() {
 		String ret="";
-		ret+="("+this.pos.getRow()+","+this.pos.getCol()+") "+ NAME + "\n";
+		ret+="("+this.pos.getRow()+","+this.pos.getCol()+") "+ NAME+ "\n";
 		return ret;
 	}
 }
